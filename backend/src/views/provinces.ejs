@@ -1,0 +1,19 @@
+<%- include('partials/head', { title, page, user }) %>
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Nationwide coverage</p><h2>25 provincial and capital administrations</h2></div></div>
+  <div class="province-cards">
+    <% provinces.forEach(province => {
+      const pct = Number(province.total) ? Math.round(Number(province.online) / Number(province.total) * 100) : 0;
+    %>
+      <article class="province-card">
+        <div class="province-code"><%= province.code %></div>
+        <div><h3><%= province.name_en %></h3><p><%= province.name_km %></p></div>
+        <div class="province-numbers"><strong><%= province.online %><small> online</small></strong><span><%= province.total %> total</span></div>
+        <span class="progress"><i style="width:<%= pct %>%"></i></span>
+        <footer><span><b class="dot amber-bg"></b><%= province.offline %> offline</span><span><b class="dot red-bg"></b><%= province.fault %> fault</span><span><%= province.current_power_w %> W</span></footer>
+      </article>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials/foot') %>
+

@@ -1,0 +1,22 @@
+<%- include('partials/head', { title, page, user }) %>
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Field response</p><h2>Maintenance work orders</h2></div><span class="count-chip"><%= orders.length %> records</span></div>
+  <div class="kanban-summary">
+    <% ['OPEN','ASSIGNED','IN_PROGRESS','ON_HOLD','COMPLETED'].forEach(value => { %>
+      <div><span><%= value.replaceAll('_',' ') %></span><strong><%= orders.filter(order => order.status === value).length %></strong></div>
+    <% }) %>
+  </div>
+  <div class="table-wrap">
+    <table><thead><tr><th>Reference</th><th>Work</th><th>Asset</th><th>Priority</th><th>Assigned</th><th>Status</th><th>Due</th></tr></thead>
+    <tbody><% orders.forEach(order => { %><tr>
+      <td><strong><%= order.reference_no %></strong></td>
+      <td><%= order.title %><small><%= order.description ?? '' %></small></td>
+      <td><a href="/lights/<%= order.light_id %>"><%= order.asset_code %></a><small><%= order.province_name %></small></td>
+      <td><span class="severity-pill <%= order.priority === 'EMERGENCY' ? 'critical' : order.priority === 'HIGH' ? 'warning' : 'info' %>"><%= order.priority %></span></td>
+      <td><%= order.assigned_to ?? 'Unassigned' %></td><td><%= order.status.replaceAll('_',' ') %></td>
+      <td><%= order.due_at ? new Date(order.due_at).toLocaleDateString('en-GB') : '—' %></td>
+    </tr><% }) %></tbody></table>
+  </div>
+</section>
+<%- include('partials/foot') %>
+

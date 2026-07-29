@@ -1,0 +1,69 @@
+name: plxy-ecolume
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ecolume
+      POSTGRES_USER: ecolume
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-local-development-only}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ecolume -d ecolume"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks: [ecolume]
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:1883:1883"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_logs:/mosquitto/log
+    networks: [ecolume]
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://ecolume:${POSTGRES_PASSWORD:-local-development-only}@postgres:5432/ecolume
+      MQTT_URL: mqtt://mosquitto:1883
+    ports:
+      - "8080:8080"
+    networks: [ecolume]
+
+  simulator:
+    profiles: ["simulator"]
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on: [backend]
+    env_file: .env
+    environment:
+      MQTT_URL: mqtt://mosquitto:1883
+      SIMULATOR_DEVICES: "6"
+    command: ["node", "dist/scripts/device-simulator.js"]
+    networks: [ecolume]
+
+volumes:
+  postgres_data:
+  mosquitto_data:
+  mosquitto_logs:
+
+networks:
+  ecolume:
+    driver: bridge

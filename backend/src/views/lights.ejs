@@ -1,0 +1,53 @@
+<%- include('partials/head', { title, page, user }) %>
+<section class="panel">
+  <div class="panel-head">
+    <div><p class="eyebrow">Asset registry</p><h2>Connected light inventory</h2></div>
+    <span class="count-chip"><%= lights.length %> results</span>
+  </div>
+  <form class="filters" method="get">
+    <input name="search" value="<%= search ?? '' %>" placeholder="Search asset code or road…">
+    <select name="status">
+      <option value="">All statuses</option>
+      <% ['ONLINE','OFFLINE','FAULT','MAINTENANCE','PROVISIONING'].forEach(value => { %>
+        <option value="<%= value %>" <%= status === value ? 'selected' : '' %>><%= value %></option>
+      <% }) %>
+    </select>
+    <button class="button secondary">Filter</button>
+    <a class="button ghost" href="/lights">Reset</a>
+  </form>
+  <% if (user.role === 'ADMIN') { %>
+    <details class="provision-box">
+      <summary>+ Provision a new field controller</summary>
+      <form class="provision-form" data-provision-form>
+        <label>Asset code<input name="assetCode" placeholder="KH-PNH-000123" pattern="KH-[A-Z0-9]{3}-[0-9]{6}" required></label>
+        <label>Display name<input name="name" placeholder="Monivong Blvd · Pole 123" required></label>
+        <label>Province<select name="provinceCode" required><% provinces.forEach(province => { %><option value="<%= province.code %>"><%= province.name_en %> · <%= province.name_km %></option><% }) %></select></label>
+        <label>District<input name="district"></label>
+        <label>Road<input name="road"></label>
+        <label>Nominal watts<input name="nominalWatts" type="number" min="10" max="2000" value="120" required></label>
+        <label>Latitude<input name="latitude" type="number" step="0.000001" min="9.5" max="15" required></label>
+        <label>Longitude<input name="longitude" type="number" step="0.000001" min="102" max="108" required></label>
+        <button class="button primary" type="submit">Create asset & credential</button>
+      </form>
+    </details>
+  <% } %>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Asset</th><th>Location</th><th>Status</th><th>Output</th><th>Electrical</th><th>Last contact</th><th></th></tr></thead>
+      <tbody>
+        <% lights.forEach(light => { %>
+          <tr>
+            <td><strong><%= light.asset_code %></strong><small><%= light.name %></small></td>
+            <td><%= light.province_name %><small><%= light.district ?? '—' %> · <%= light.road ?? '—' %></small></td>
+            <td><span class="status <%= light.status.toLowerCase() %>"><i></i><%= light.status %></span></td>
+            <td><%= light.actual_on === null ? '—' : light.actual_on ? 'ON' : 'OFF' %><small><%= light.actual_brightness ?? 0 %>% brightness</small></td>
+            <td><%= light.last_power_w ?? '—' %> W<small><%= light.last_voltage_v ?? '—' %> V</small></td>
+            <td><%= light.last_seen_at ? new Date(light.last_seen_at).toLocaleString('en-GB') : 'Never' %></td>
+            <td><a class="row-link" href="/lights/<%= light.id %>">→</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</section>
+<%- include('partials/foot') %>

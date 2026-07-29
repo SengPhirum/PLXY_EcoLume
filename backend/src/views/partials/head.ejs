@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#07100d">
+  <title><%= title %> · PLXY EcoLume</title>
+  <link rel="stylesheet" href="/public/app.css">
+  <script src="/public/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>PLXY</strong><small>EcoLume</small></span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="<%= page === 'dashboard' ? 'active' : '' %>" href="/"><span>⌁</span>Overview</a>
+        <a class="<%= page === 'lights' ? 'active' : '' %>" href="/lights"><span>◉</span>Street lights</a>
+        <a class="<%= page === 'alerts' ? 'active' : '' %>" href="/alerts"><span>△</span>Alerts</a>
+        <a class="<%= page === 'maintenance' ? 'active' : '' %>" href="/maintenance"><span>◇</span>Maintenance</a>
+        <a class="<%= page === 'provinces' ? 'active' : '' %>" href="/provinces"><span>⌖</span>Provinces</a>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="live-indicator"><span></span>National network</div>
+        <small>Operations centre · Cambodia</small>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-button menu-button" data-menu aria-label="Open menu">☰</button>
+        <div>
+          <p class="eyebrow">Ministry operations</p>
+          <h1><%= title %></h1>
+        </div>
+        <div class="top-actions">
+          <div class="utc-clock" data-clock>--:--:--</div>
+          <div class="user-chip">
+            <span><%= user.username.slice(0, 1).toUpperCase() %></span>
+            <div><strong><%= user.username %></strong><small><%= user.role %></small></div>
+          </div>
+          <form action="/logout" method="post"><button class="icon-button" title="Sign out">↗</button></form>
+        </div>
+      </header>
+      <div class="content">
+

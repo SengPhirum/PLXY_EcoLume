@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07100d">
+  <title>Sign in · PLXY EcoLume</title>
+  <link rel="stylesheet" href="/public/app.css">
+</head>
+<body class="login-body">
+  <main class="login-shell">
+    <section class="login-visual">
+      <div class="login-brand">
+        <span class="brand-mark large"><i></i><i></i><i></i></span>
+        <span><strong>PLXY</strong><small>EcoLume</small></span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow green">Smart public infrastructure</p>
+        <h1>Every street.<br><em>Always visible.</em></h1>
+        <p>One secure operations centre for Cambodia's connected public-lighting network.</p>
+      </div>
+      <div class="signal-art" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+        <i></i><i></i><i></i>
+      </div>
+      <p class="visual-note">25 provincial and capital administrations · 24/7 operations</p>
+    </section>
+    <section class="login-panel">
+      <form class="login-card" method="post" action="/login">
+        <p class="eyebrow">Authorized personnel</p>
+        <h2>Operations sign in</h2>
+        <p class="muted">Use your assigned EcoLume administrator account.</p>
+        <% if (error) { %><div class="form-error"><%= error %></div><% } %>
+        <label>Username<input name="username" autocomplete="username" required autofocus></label>
+        <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="button primary wide" type="submit">Enter operations centre <span>→</span></button>
+        <p class="secure-note">▣ Encrypted session · Activity is audited</p>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
+

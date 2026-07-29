@@ -1,0 +1,53 @@
+<%- include('partials/head', { title, page, user }) %>
+<div class="detail-header">
+  <div><a class="back-link" href="/lights">← Street lights</a><p><%= light.name %> · <%= light.province_name %> / <%= light.province_name_km %></p></div>
+  <span class="status large <%= light.status.toLowerCase() %>"><i></i><%= light.status %></span>
+</div>
+
+<section class="metric-grid">
+  <div class="metric"><p>Power</p><strong><%= light.last_power_w ?? '—' %><small> W</small></strong><span>Nominal <%= light.nominal_watts %> W</span></div>
+  <div class="metric"><p>Supply</p><strong><%= light.last_voltage_v ?? '—' %><small> V</small></strong><span>Expected 180–265 V</span></div>
+  <div class="metric"><p>Temperature</p><strong><%= light.last_temperature_c ?? '—' %><small> °C</small></strong><span>Controller enclosure</span></div>
+  <div class="metric"><p>Brightness</p><strong><%= light.actual_brightness ?? '—' %><small>%</small></strong><span>Desired <%= light.desired_brightness %>%</span></div>
+  <div class="metric"><p>Last contact</p><strong class="compact"><%= light.last_seen_at ? new Date(light.last_seen_at).toLocaleTimeString('en-GB') : 'Never' %></strong><span><%= light.last_seen_at ? new Date(light.last_seen_at).toLocaleDateString('en-GB') : 'No telemetry' %></span></div>
+</section>
+
+<div class="detail-grid">
+  <section class="panel">
+    <div class="panel-head"><div><p class="eyebrow">Remote operation</p><h2>Light control</h2></div></div>
+    <form class="command-form" data-command-form data-light-id="<%= light.id %>">
+      <div class="toggle-row"><div><strong>Lighting state</strong><small>Applies after device acknowledgement</small></div><label class="switch"><input name="on" type="checkbox" <%= light.desired_on ? 'checked' : '' %>><span></span></label></div>
+      <label>Brightness <output data-brightness><%= light.desired_brightness %>%</output>
+        <input type="range" name="brightness" min="0" max="100" value="<%= light.desired_brightness %>">
+      </label>
+      <button class="button primary" type="submit">Send secure command</button>
+      <button class="button secondary" type="button" data-command="identify">Identify device</button>
+      <button class="button ghost" type="button" data-command="sampleNow">Request telemetry</button>
+    </form>
+  </section>
+  <section class="panel asset-info">
+    <div class="panel-head"><div><p class="eyebrow">Installation</p><h2>Asset information</h2></div></div>
+    <dl>
+      <div><dt>Asset code</dt><dd><%= light.asset_code %></dd></div>
+      <div><dt>Province</dt><dd><%= light.province_name %></dd></div>
+      <div><dt>District</dt><dd><%= light.district ?? '—' %></dd></div>
+      <div><dt>Road</dt><dd><%= light.road ?? '—' %></dd></div>
+      <div><dt>Coordinates</dt><dd><%= light.latitude?.toFixed(6) ?? '—' %>, <%= light.longitude?.toFixed(6) ?? '—' %></dd></div>
+      <div><dt>Firmware</dt><dd><%= light.firmware_version ?? '—' %></dd></div>
+    </dl>
+  </section>
+</div>
+
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Recent samples</p><h2>Telemetry history</h2></div></div>
+  <div class="table-wrap compact-table">
+    <table><thead><tr><th>Received</th><th>State</th><th>Brightness</th><th>Voltage</th><th>Current</th><th>Power</th><th>Temperature</th><th>Signal</th></tr></thead>
+    <tbody><% telemetry.forEach(row => { %><tr>
+      <td><%= new Date(row.recorded_at).toLocaleString('en-GB') %></td><td><%= row.relay_on ? 'ON' : 'OFF' %></td>
+      <td><%= row.brightness %>%</td><td><%= row.voltage_v %> V</td><td><%= row.current_a %> A</td>
+      <td><%= row.power_w %> W</td><td><%= row.temperature_c ?? '—' %> °C</td><td><%= row.rssi ?? '—' %></td>
+    </tr><% }) %></tbody></table>
+  </div>
+</section>
+<%- include('partials/foot') %>
+

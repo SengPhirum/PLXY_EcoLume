@@ -1,0 +1,19 @@
+<%- include('partials/head', { title, page, user }) %>
+<section class="panel">
+  <div class="panel-head">
+    <div><p class="eyebrow">Operational events</p><h2>Alert management</h2></div>
+    <div class="segmented"><% ['OPEN','ACKNOWLEDGED','RESOLVED','ALL'].forEach(value => { %><a class="<%= status === value ? 'active' : '' %>" href="/alerts?status=<%= value %>"><%= value %></a><% }) %></div>
+  </div>
+  <div class="table-wrap">
+    <table><thead><tr><th>Severity</th><th>Alert</th><th>Asset & location</th><th>Opened</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody><% alerts.forEach(alert => { %><tr>
+      <td><span class="severity-pill <%= alert.severity.toLowerCase() %>"><%= alert.severity %></span></td>
+      <td><strong><%= alert.type.replaceAll('_', ' ') %></strong><small><%= alert.message %></small></td>
+      <td><a href="/lights/<%= alert.light_id %>"><%= alert.asset_code %></a><small><%= alert.province_name %></small></td>
+      <td><%= new Date(alert.opened_at).toLocaleString('en-GB') %></td>
+      <td><%= alert.status %></td>
+      <td><div class="row-actions"><% if (alert.status === 'OPEN') { %><button class="button small secondary" data-ack-alert="<%= alert.id %>">Acknowledge</button><% } %><button class="button small ghost" data-work-order data-alert-id="<%= alert.id %>" data-light-id="<%= alert.light_id %>" data-alert-type="<%= alert.type %>" data-severity="<%= alert.severity %>">Create work order</button></div></td>
+    </tr><% }) %></tbody></table>
+  </div>
+</section>
+<%- include('partials/foot') %>

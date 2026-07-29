@@ -1,0 +1,70 @@
+<%- include('partials/head', { title, page, user }) %>
+<section class="summary-strip">
+  <div class="summary-card feature">
+    <div><p>Network availability</p><strong><%= fleet.total > 0 ? ((Number(fleet.online) / Number(fleet.total)) * 100).toFixed(1) : '0.0' %><small>%</small></strong></div>
+    <span class="pulse-ring"><i></i></span>
+  </div>
+  <div class="summary-card"><p>Managed lights</p><strong><%= Number(fleet.total).toLocaleString() %></strong><small><b class="dot green"></b><%= fleet.online %> online</small></div>
+  <div class="summary-card"><p>Needs attention</p><strong class="amber"><%= Number(fleet.offline) + Number(fleet.fault) %></strong><small><b class="dot amber-bg"></b><%= fleet.offline %> offline · <%= fleet.fault %> fault</small></div>
+  <div class="summary-card"><p>Open alerts</p><strong class="red"><%= alerts.total %></strong><small><b class="dot red-bg"></b><%= alerts.critical %> critical</small></div>
+  <div class="summary-card"><p>Energy today</p><strong><%= energy.today_kwh %><small> kWh</small></strong><small><%= workOrders.open %> active work orders</small></div>
+</section>
+
+<div class="dashboard-grid">
+  <section class="panel map-panel">
+    <div class="panel-head">
+      <div><p class="eyebrow">Live fleet</p><h2>Cambodia operations map</h2></div>
+      <a class="text-link" href="/lights">View all assets →</a>
+    </div>
+    <div class="operation-map">
+      <div class="map-grid"></div>
+      <span class="map-label north">LAO PDR</span><span class="map-label west">THAILAND</span><span class="map-label east">VIETNAM</span>
+      <% mapLights.forEach(light => {
+        const left = Math.max(7, Math.min(93, ((Number(light.longitude) - 102.2) / 5.5) * 100));
+        const top = Math.max(7, Math.min(93, ((14.8 - Number(light.latitude)) / 5.0) * 100));
+      %>
+        <a href="/lights/<%= light.id %>" class="map-pin <%= light.status.toLowerCase() %>"
+           style="left:<%= left %>%;top:<%= top %>%"
+           title="<%= light.asset_code %> · <%= light.status %>"><span></span></a>
+      <% }) %>
+      <div class="map-legend"><span><b class="dot green"></b>Online</span><span><b class="dot amber-bg"></b>Offline</span><span><b class="dot red-bg"></b>Fault</span></div>
+      <small class="map-caption">Approximate operational view. Exact coordinates require authorized access.</small>
+    </div>
+  </section>
+
+  <section class="panel alerts-panel">
+    <div class="panel-head">
+      <div><p class="eyebrow">Action queue</p><h2>Priority alerts</h2></div>
+      <a class="text-link" href="/alerts">All alerts →</a>
+    </div>
+    <div class="alert-list">
+      <% if (!recentAlerts.length) { %><div class="empty-state">No open alerts. The network is healthy.</div><% } %>
+      <% recentAlerts.forEach(alert => { %>
+        <a class="alert-row" href="/lights/<%= alert.light_id %>">
+          <span class="severity-icon <%= alert.severity.toLowerCase() %>">!</span>
+          <div><strong><%= alert.type.replaceAll('_', ' ') %></strong><p><%= alert.asset_code %> · <%= alert.province_name %></p></div>
+          <time><%= new Date(alert.opened_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }) %></time>
+        </a>
+      <% }) %>
+    </div>
+  </section>
+</div>
+
+<section class="panel province-panel">
+  <div class="panel-head">
+    <div><p class="eyebrow">Coverage</p><h2>Provincial readiness</h2></div>
+    <a class="text-link" href="/provinces">Detailed view →</a>
+  </div>
+  <div class="province-grid">
+    <% provinceStats.forEach(province => {
+      const pct = Number(province.total) ? Math.round(Number(province.online) / Number(province.total) * 100) : 0;
+    %>
+      <div class="province-mini">
+        <div><strong><%= province.code %></strong><span><%= province.name_en %></span><small><%= province.name_km %></small></div>
+        <div class="mini-stat"><b><%= province.online %>/<%= province.total %></b><span class="progress"><i style="width:<%= pct %>%"></i></span></div>
+      </div>
+    <% }) %>
+  </div>
+</section>
+<%- include('partials/foot') %>
+
