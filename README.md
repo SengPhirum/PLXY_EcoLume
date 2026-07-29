@@ -1,3 +1,5 @@
+![PLXY EcoLume smart LED street-light network in Cambodia](docs/assets/ecolume-cover.webp)
+
 # PLXY EcoLume
 
 PLXY EcoLume is an open, secure-by-design smart street-light management platform for nationwide public-lighting operations. It combines an ESP32 cellular/GNSS field controller with a central web platform for live monitoring, remote dimming, fault alerts, and maintenance coordination across Cambodia's 24 provinces and Phnom Penh.
@@ -23,6 +25,12 @@ PLXY EcoLume is an open, secure-by-design smart street-light management platform
 | Maintenance | Work orders, priority, assignment, status, due date, alert linkage |
 | Security | Per-device tokens, hashed credentials, TLS-ready MQTT, RBAC, audit trail |
 | Resilience | Cellular reconnect, local safety schedule, queued telemetry, watchdog |
+
+## Admin operations centre
+
+![PLXY EcoLume national operations dashboard](docs/assets/admin-dashboard.png)
+
+The responsive admin portal provides national fleet availability, live asset locations, electrical status, energy usage, priority alerts, provincial readiness, remote commands, and maintenance workflows. This screenshot was rendered from the actual dashboard code with representative demonstration data—no production credentials or ministry asset locations are included.
 
 ## Architecture
 
