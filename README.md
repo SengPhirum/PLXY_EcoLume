@@ -2,13 +2,26 @@
 
 # PLXY EcoLume
 
-PLXY EcoLume is an open, secure-by-design smart street-light management platform for nationwide public-lighting operations. It combines an ESP32 cellular/GNSS field controller with a central web platform for live monitoring, remote dimming, fault alerts, and maintenance coordination across Cambodia's 24 provinces and Phnom Penh.
+PLXY EcoLume is an open, secure-by-design smart street-light management platform for nationwide public-lighting operations. It combines an ESP32 field controller with a central web platform for live monitoring, remote dimming, fault alerts, and maintenance coordination across Cambodia's 24 provinces and Phnom Penh.
 
-> **Status:** working MVP/reference implementation. Before public-road deployment, complete electrical certification, carrier testing, security review, field calibration, redundancy testing, and ministry acceptance. Never connect an ESP32 directly to mains voltage.
+> **Status:** working cellular MVP/reference implementation. Before public-road deployment, complete electrical certification, carrier/RF testing, security review, field calibration, redundancy testing, and ministry acceptance. Never connect an ESP32 directly to mains voltage.
+
+## Communication options
+
+| Option | Recommended use | Pole connection | Recurring cost |
+|---|---|---|---|
+| **1 — Direct SIM7600 cellular/GNSS** | Isolated poles, rapid pilots, gateway fallback | One SIM per pole | Mobile plan per pole |
+| **2 — LoRaWAN + shared gateway backhaul** | Groups of poles along roads, districts, parks, and compounds | ESP32 + SX1262 to nearby gateway | No SIM per pole; one backhaul per gateway |
+
+- [Option 1: illustrated ESP32 + SIM7600 firmware and installation guide](firmware/README.md)
+- [Option 2: low-cost LoRaWAN architecture and real-world deployment tutorial](firmware-lorawan/README.md)
+
+Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is documented but not yet implemented in the current MVP. Radio channels, power, antennas, and equipment approval must be confirmed with Cambodia's Telecommunication Regulator before field transmission or production purchasing.
 
 ## What is included
 
 - `firmware/` — PlatformIO firmware for ESP32 + SIM7600, GPS, INA219 metering, temperature, PWM/relay control, MQTT telemetry, command handling, offline queue, and watchdog.
+- `firmware-lorawan/` — Option 2 architecture, low-cost equipment plan, node/gateway setup, ChirpStack integration, field survey, security, and rollout tutorial.
 - `backend/` — TypeScript/Express service with PostgreSQL, authenticated admin portal, device API, MQTT ingestion, alert rules, work orders, audit logs, and health checks.
 - `scripts/device-simulator.ts` — simulated street lights for demonstrations and load testing.
 - `docker-compose.yml` — PostgreSQL, Mosquitto, backend, and simulator-ready local deployment.
@@ -32,7 +45,7 @@ PLXY EcoLume is an open, secure-by-design smart street-light management platform
 
 The responsive admin portal provides national fleet availability, live asset locations, electrical status, energy usage, priority alerts, provincial readiness, remote commands, and maintenance workflows. This screenshot was rendered from the actual dashboard code with representative demonstration data—no production credentials or ministry asset locations are included.
 
-## Architecture
+## Current implemented architecture
 
 ```mermaid
 flowchart TD
@@ -68,7 +81,7 @@ flowchart TD
    docker compose --profile simulator up simulator
    ```
 
-Detailed instructions are in [Deployment](docs/DEPLOYMENT.md) and [Firmware](firmware/README.md).
+Detailed instructions are in [Deployment](docs/DEPLOYMENT.md), [Option 1 firmware](firmware/README.md), and [Option 2 LoRaWAN](firmware-lorawan/README.md).
 
 ## Default topics and API
 
@@ -100,13 +113,13 @@ pio run
 
 ## Safety and privacy
 
-- Do not store production credentials, SIM PINs, precise government asset locations, or broker certificates in Git.
+- Do not store production credentials, SIM PINs, LoRaWAN root keys, precise government asset locations, or broker certificates in Git.
 - The repository does not include a software license. Copyright remains with the repository owner unless a license is added.
 - Follow Cambodia's electrical, telecommunications, cybersecurity, procurement, and personal-data requirements.
 - Use certified surge protection, galvanic isolation, weatherproof enclosures, proper earthing, and qualified electrical engineers.
 
 ## Roadmap
 
-- Pilot: 20–50 lights in one district
-- Controlled rollout: two provinces with carrier and maintenance-team validation
-- National rollout: regional brokers, high-availability database, disaster recovery, SIEM integration, and 24/7 NOC/SOC procedures
+- Pilot: 20–50 lights in one district, comparing direct cellular and LoRaWAN where practical
+- Controlled rollout: two provinces with carrier/RF and maintenance-team validation
+- National rollout: regional gateways/brokers, high-availability database, disaster recovery, SIEM integration, and 24/7 NOC/SOC procedures
