@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 4: Add EcoLume sensors</title>
+  <desc id="desc">I2C wiring for INA219 and BH1750 and an NTC divider connected to ESP32 GPIO34.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 4</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Add metering, light and temperature sensors</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">INA219 and BH1750 share the same I²C bus.</text>
+
+  <rect x="64" y="200" width="262" height="376" rx="24" fill="#173428" stroke="#8de34e" stroke-width="2"/>
+  <text x="101" y="244" fill="#f5fff8" font-family="Arial,sans-serif" font-size="25" font-weight="700">ESP32 DevKit</text>
+  <g font-family="Arial,sans-serif" font-size="16" font-weight="700">
+    <rect x="96" y="279" width="171" height="42" rx="9" fill="#24483a"/><text x="114" y="306" fill="#f5fff8">GPIO 21 • SDA</text>
+    <rect x="96" y="337" width="171" height="42" rx="9" fill="#24483a"/><text x="114" y="364" fill="#f5fff8">GPIO 22 • SCL</text>
+    <rect x="96" y="395" width="171" height="42" rx="9" fill="#24483a"/><text x="114" y="422" fill="#f5fff8">3V3 + GND</text>
+    <rect x="96" y="477" width="171" height="42" rx="9" fill="#392e20"/><text x="114" y="504" fill="#ffe1a1">GPIO 34 • ADC</text>
+  </g>
+
+  <rect x="426" y="200" width="294" height="194" rx="24" fill="#132a20" stroke="#50b8d8" stroke-width="2"/>
+  <text x="457" y="242" fill="#f5fff8" font-family="Arial,sans-serif" font-size="23" font-weight="700">I²C sensor bus</text>
+  <rect x="458" y="271" width="106" height="82" rx="12" fill="#1d3a30" stroke="#50b8d8"/>
+  <text x="479" y="305" fill="#f5fff8" font-family="Arial,sans-serif" font-size="18" font-weight="700">INA219</text>
+  <text x="478" y="330" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">0x40</text>
+  <rect x="582" y="271" width="106" height="82" rx="12" fill="#1d3a30" stroke="#e0bd62"/>
+  <text x="602" y="305" fill="#f5fff8" font-family="Arial,sans-serif" font-size="18" font-weight="700">BH1750</text>
+  <text x="605" y="330" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">0x23*</text>
+  <path d="M326 300H426M326 358H426M326 416H389V347H426" fill="none" stroke="#8de34e" stroke-width="5"/>
+  <text x="335" y="288" fill="#8de34e" font-family="Arial,sans-serif" font-size="14">SDA</text>
+  <text x="335" y="346" fill="#8de34e" font-family="Arial,sans-serif" font-size="14">SCL</text>
+
+  <rect x="426" y="422" width="294" height="154" rx="24" fill="#132a20" stroke="#e0bd62" stroke-width="2"/>
+  <text x="459" y="462" fill="#f5fff8" font-family="Arial,sans-serif" font-size="22" font-weight="700">10 kΩ NTC divider</text>
+  <path d="M489 494h42l12-18 20 36 20-36 20 36 12-18h42" fill="none" stroke="#e0bd62" stroke-width="4"/>
+  <circle cx="573" cy="533" r="8" fill="#e0bd62"/>
+  <path d="M573 512v21M573 533H326V498" fill="none" stroke="#e0bd62" stroke-width="4"/>
+  <text x="468" y="555" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Calibrate against a known thermometer</text>
+
+  <rect x="784" y="200" width="352" height="376" rx="24" fill="#301a19" stroke="#ef6b62" stroke-width="2"/>
+  <text x="822" y="245" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="23" font-weight="700">INA219 boundary</text>
+  <rect x="826" y="278" width="266" height="104" rx="14" fill="#3b2220"/>
+  <text x="852" y="312" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">VIN+ → low-voltage DC supply</text>
+  <text x="852" y="344" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">VIN− → low-voltage test load</text>
+  <text x="852" y="367" fill="#aac0b3" font-family="Arial,sans-serif" font-size="13">Observe module voltage/current limits.</text>
+  <circle cx="850" cy="434" r="23" fill="#ef6b62"/><text x="842" y="442" fill="#fff" font-family="Arial,sans-serif" font-size="26" font-weight="700">!</text>
+  <text x="886" y="425" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="17" font-weight="700">Never connect INA219 to</text>
+  <text x="886" y="451" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="17" font-weight="700">230 V AC or the LED output.</text>
+  <text x="826" y="510" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">Field metering requires a correctly rated,</text>
+  <text x="826" y="533" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">isolated energy-meter front end.</text>
+
+  <text x="64" y="622" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">*BH1750 address depends on the ADDR pin. Keep all sensor wiring on the SELV low-voltage side.</text>
+</svg>

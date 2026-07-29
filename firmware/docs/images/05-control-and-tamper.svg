@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 5: Connect control and tamper inputs</title>
+  <desc id="desc">ESP32 relay, dimming and tamper signals remain separated from the certified street-light driver interface.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#8de34e"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 5</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Control only through an isolated interface</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">GPIO pins carry logic signals—not lamp power.</text>
+
+  <rect x="62" y="206" width="280" height="328" rx="24" fill="#173428" stroke="#8de34e" stroke-width="2"/>
+  <text x="105" y="250" fill="#f5fff8" font-family="Arial,sans-serif" font-size="25" font-weight="700">ESP32 DevKit</text>
+  <g font-family="Arial,sans-serif" font-size="16" font-weight="700">
+    <rect x="97" y="291" width="202" height="48" rx="10" fill="#24483a"/><text x="117" y="321" fill="#f5fff8">GPIO 18 • ON/OFF</text>
+    <rect x="97" y="366" width="202" height="48" rx="10" fill="#24483a"/><text x="117" y="396" fill="#f5fff8">GPIO 19 • PWM</text>
+    <rect x="97" y="441" width="202" height="48" rx="10" fill="#24483a"/><text x="117" y="471" fill="#f5fff8">GPIO 23 • TAMPER</text>
+  </g>
+
+  <rect x="451" y="206" width="296" height="328" rx="24" fill="#132a20" stroke="#e0bd62" stroke-width="2"/>
+  <text x="486" y="250" fill="#ffe1a1" font-family="Arial,sans-serif" font-size="23" font-weight="700">Isolation boundary</text>
+  <rect x="487" y="285" width="224" height="64" rx="12" fill="#392e20"/>
+  <text x="512" y="313" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">Opto-isolated relay</text>
+  <text x="522" y="335" fill="#aac0b3" font-family="Arial,sans-serif" font-size="13">or certified contactor input</text>
+  <rect x="487" y="372" width="224" height="64" rx="12" fill="#392e20"/>
+  <text x="505" y="400" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">Isolated 0–10 V / DALI</text>
+  <text x="528" y="422" fill="#aac0b3" font-family="Arial,sans-serif" font-size="13">matched to LED driver</text>
+  <rect x="487" y="459" width="224" height="48" rx="12" fill="#1e392f"/>
+  <path d="M519 483h32l12-17 20 34 20-34 12 17h53" fill="none" stroke="#8de34e" stroke-width="4"/>
+
+  <path d="M342 315H441" stroke="#8de34e" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M342 390H441" stroke="#50b8d8" stroke-width="6" marker-end="url(#arrow)"/>
+  <path d="M441 465H342" stroke="#e0bd62" stroke-width="6" marker-end="url(#arrow)"/>
+
+  <rect x="855" y="206" width="281" height="328" rx="24" fill="#301a19" stroke="#ef6b62" stroke-width="2"/>
+  <text x="904" y="250" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="23" font-weight="700">Street-light side</text>
+  <path d="M982 286v121M927 407h110M943 407l-22 73M1021 407l22 73" fill="none" stroke="#f5fff8" stroke-width="7" stroke-linecap="round"/>
+  <path d="M962 302h40l20 46h-80z" fill="#e0bd62" opacity=".85"/>
+  <circle cx="982" cy="348" r="70" fill="#e0bd62" opacity=".08"/>
+  <text x="892" y="509" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">Certified LED driver</text>
+  <text x="885" y="532" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Installed by qualified personnel</text>
+  <path d="M747 320H842M747 404H842" stroke="#ef6b62" stroke-width="5" stroke-dasharray="10 8"/>
+
+  <rect x="62" y="564" width="1074" height="64" rx="15" fill="#0f241b" stroke="#31503e"/>
+  <text x="88" y="591" fill="#f5fff8" font-family="Arial,sans-serif" font-size="16" font-weight="700">Tamper switch:</text>
+  <text x="230" y="591" fill="#dcece2" font-family="Arial,sans-serif" font-size="16">COM → GPIO 23, NC → GND; released plunger pulls LOW and reports an open cabinet.</text>
+  <text x="88" y="615" fill="#ffb2ad" font-family="Arial,sans-serif" font-size="14">Never switch 230 V AC on a breadboard or with an unrated hobby relay.</text>
+</svg>

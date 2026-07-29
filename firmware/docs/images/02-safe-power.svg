@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 2: Wire power safely</title>
+  <desc id="desc">ESP32 powered by USB and SIM7600 development board powered by its own regulated supply with a shared low-voltage ground.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#8de34e"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 2</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Give the modem its own stable power</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">Cellular transmit bursts can reset an under-powered modem or ESP32.</text>
+
+  <rect x="70" y="220" width="220" height="150" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+  <rect x="100" y="246" width="160" height="82" rx="8" fill="#0b1813" stroke="#5c7868"/>
+  <text x="135" y="292" fill="#f5fff8" font-family="Arial,sans-serif" font-size="22" font-weight="700">LAPTOP</text>
+  <text x="120" y="351" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">USB data + power</text>
+
+  <rect x="482" y="206" width="238" height="178" rx="22" fill="#173428" stroke="#8de34e" stroke-width="2"/>
+  <rect x="527" y="245" width="148" height="78" rx="9" fill="#24483a" stroke="#8de34e"/>
+  <text x="551" y="291" fill="#f5fff8" font-family="Arial,sans-serif" font-size="22" font-weight="700">ESP32</text>
+  <text x="545" y="354" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">USB connector</text>
+  <path d="M290 294H470" stroke="#8de34e" stroke-width="7" marker-end="url(#arrow)"/>
+  <text x="338" y="278" fill="#8de34e" font-family="Arial,sans-serif" font-size="16" font-weight="700">USB</text>
+
+  <rect x="70" y="437" width="220" height="126" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+  <circle cx="122" cy="500" r="28" fill="none" stroke="#e0bd62" stroke-width="5"/>
+  <path d="M122 472v56M94 500h56" stroke="#e0bd62" stroke-width="4"/>
+  <text x="168" y="489" fill="#f5fff8" font-family="Arial,sans-serif" font-size="19" font-weight="700">REGULATED</text>
+  <text x="168" y="517" fill="#f5fff8" font-family="Arial,sans-serif" font-size="19" font-weight="700">SUPPLY</text>
+  <text x="95" y="545" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Common boards: 5 V / ≥3 A*</text>
+
+  <rect x="482" y="423" width="238" height="154" rx="22" fill="#17302f" stroke="#50b8d8" stroke-width="2"/>
+  <rect x="523" y="456" width="156" height="70" rx="9" fill="#263c39" stroke="#50b8d8"/>
+  <text x="541" y="498" fill="#f5fff8" font-family="Arial,sans-serif" font-size="21" font-weight="700">SIM7600</text>
+  <text x="516" y="550" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Development board input</text>
+  <path d="M290 500H470" stroke="#e0bd62" stroke-width="7" marker-end="url(#arrow)"/>
+  <text x="326" y="484" fill="#e0bd62" font-family="Arial,sans-serif" font-size="16" font-weight="700">BOARD INPUT</text>
+
+  <path d="M600 384V410M600 410H826V500H720" fill="none" stroke="#aac0b3" stroke-width="5"/>
+  <circle cx="826" cy="500" r="9" fill="#aac0b3"/>
+  <text x="846" y="493" fill="#f5fff8" font-family="Arial,sans-serif" font-size="18" font-weight="700">COMMON GND</text>
+  <text x="846" y="518" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">Low-voltage side only</text>
+
+  <rect x="796" y="206" width="340" height="176" rx="22" fill="#301a19" stroke="#ef6b62" stroke-width="2"/>
+  <circle cx="842" cy="253" r="22" fill="#ef6b62"/><text x="834" y="261" fill="#fff" font-family="Arial,sans-serif" font-size="25" font-weight="700">!</text>
+  <text x="880" y="257" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="20" font-weight="700">DO NOT</text>
+  <text x="824" y="302" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17">Power SIM7600 from ESP32 3V3.</text>
+  <text x="824" y="331" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17">Connect any pin directly to 230 V AC.</text>
+  <text x="824" y="359" fill="#ffb2ad" font-family="Arial,sans-serif" font-size="14">One ESP32 power source at a time.</text>
+
+  <text x="64" y="628" fill="#e0bd62" font-family="Arial,sans-serif" font-size="15">*Verify the input marking and manual for your exact SIM7600 board before applying power.</text>
+  <text x="64" y="650" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Disconnect power before moving wires or inserting the SIM card.</text>
+</svg>

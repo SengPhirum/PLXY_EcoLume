@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 6: Configure and flash EcoLume firmware</title>
+  <desc id="desc">PlatformIO workflow to copy configuration, set credentials, build, upload and open the serial monitor.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#8de34e"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 6</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Configure, build and flash with PlatformIO</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">Keep device credentials unique and never commit include/config.h.</text>
+
+  <g font-family="Arial,sans-serif">
+    <rect x="60" y="215" width="204" height="154" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+    <circle cx="95" cy="249" r="18" fill="#8de34e"/><text x="89" y="256" fill="#071410" font-size="18" font-weight="700">1</text>
+    <text x="126" y="255" fill="#f5fff8" font-size="19" font-weight="700">Install tools</text>
+    <text x="87" y="301" fill="#dcece2" font-size="16">VS Code</text>
+    <text x="87" y="327" fill="#dcece2" font-size="16">PlatformIO extension</text>
+    <path d="M264 292H302" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+
+    <rect x="312" y="215" width="246" height="154" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+    <circle cx="347" cy="249" r="18" fill="#8de34e"/><text x="341" y="256" fill="#071410" font-size="18" font-weight="700">2</text>
+    <text x="378" y="255" fill="#f5fff8" font-size="19" font-weight="700">Create config</text>
+    <text x="339" y="298" fill="#8de34e" font-family="monospace" font-size="13">cp include/config.example.h \</text>
+    <text x="339" y="321" fill="#8de34e" font-family="monospace" font-size="13">   include/config.h</text>
+    <text x="339" y="347" fill="#aac0b3" font-size="13">Windows: Copy-Item instead</text>
+    <path d="M558 292H596" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+
+    <rect x="606" y="215" width="246" height="154" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+    <circle cx="641" cy="249" r="18" fill="#8de34e"/><text x="635" y="256" fill="#071410" font-size="18" font-weight="700">3</text>
+    <text x="672" y="255" fill="#f5fff8" font-size="19" font-weight="700">Set values</text>
+    <text x="633" y="295" fill="#dcece2" font-size="15">DEVICE_ID + token</text>
+    <text x="633" y="320" fill="#dcece2" font-size="15">APN + MQTT host</text>
+    <text x="633" y="345" fill="#dcece2" font-size="15">Production root CA</text>
+    <path d="M852 292H890" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+
+    <rect x="900" y="215" width="236" height="154" rx="22" fill="#132a20" stroke="#31503e" stroke-width="2"/>
+    <circle cx="935" cy="249" r="18" fill="#8de34e"/><text x="929" y="256" fill="#071410" font-size="18" font-weight="700">4</text>
+    <text x="966" y="255" fill="#f5fff8" font-size="19" font-weight="700">Connect USB</text>
+    <text x="927" y="301" fill="#dcece2" font-size="15">Select ESP32 port</text>
+    <text x="927" y="328" fill="#dcece2" font-size="15">Keep modem powered</text>
+  </g>
+
+  <rect x="60" y="414" width="1076" height="171" rx="24" fill="#0b1813" stroke="#31503e"/>
+  <circle cx="95" cy="449" r="18" fill="#8de34e"/><text x="89" y="456" fill="#071410" font-family="Arial,sans-serif" font-size="18" font-weight="700">5</text>
+  <text x="127" y="456" fill="#f5fff8" font-family="Arial,sans-serif" font-size="20" font-weight="700">Run from the firmware directory</text>
+  <g font-family="monospace" font-size="18">
+    <rect x="87" y="482" width="286" height="61" rx="10" fill="#14251e"/><text x="109" y="519" fill="#8de34e">pio run</text>
+    <rect x="402" y="482" width="316" height="61" rx="10" fill="#14251e"/><text x="424" y="519" fill="#8de34e">pio run -t upload</text>
+    <rect x="747" y="482" width="360" height="61" rx="10" fill="#14251e"/><text x="769" y="519" fill="#8de34e">pio device monitor -b 115200</text>
+  </g>
+  <text x="64" y="631" fill="#e0bd62" font-family="Arial,sans-serif" font-size="15">If upload waits at “Connecting…”, hold BOOT, tap EN/RESET, then release BOOT when writing begins.</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 1: Prepare the EcoLume bench equipment</title>
+  <desc id="desc">Low-cost equipment overview for an ESP32 and SIM7600 street-light controller prototype.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-opacity=".25"/></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <circle cx="1090" cy="80" r="170" fill="#8de34e" opacity=".06"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 1</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Prepare the low-voltage bench kit</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">Buy development boards with regulators and antennas—avoid raw modem modules.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="194" width="332" height="186" rx="22" fill="#132a20" stroke="#31503e"/>
+    <rect x="86" y="218" width="132" height="92" rx="10" fill="#24483a" stroke="#8de34e" stroke-width="2"/>
+    <rect x="106" y="236" width="92" height="51" rx="4" fill="#0c1814"/>
+    <circle cx="100" cy="328" r="5" fill="#8de34e"/><circle cx="118" cy="328" r="5" fill="#8de34e"/>
+    <text x="240" y="247" fill="#f5fff8" font-family="Arial,sans-serif" font-size="22" font-weight="700">ESP32 DevKit</text>
+    <text x="240" y="278" fill="#aac0b3" font-family="Arial,sans-serif" font-size="16">ESP32-WROOM-32</text>
+    <text x="240" y="302" fill="#aac0b3" font-family="Arial,sans-serif" font-size="16">USB data cable</text>
+    <text x="86" y="354" fill="#8de34e" font-family="Arial,sans-serif" font-size="17" font-weight="700">US$5–8</text>
+
+    <rect x="422" y="194" width="348" height="186" rx="22" fill="#132a20" stroke="#31503e"/>
+    <rect x="444" y="223" width="138" height="88" rx="9" fill="#263c39" stroke="#50b8d8" stroke-width="2"/>
+    <rect x="464" y="243" width="98" height="49" rx="4" fill="#151d1c"/>
+    <path d="M582 244h58c38 0 38-37 74-37" fill="none" stroke="#50b8d8" stroke-width="5"/>
+    <path d="M582 286h58c38 0 38 37 74 37" fill="none" stroke="#e0bd62" stroke-width="5"/>
+    <text x="604" y="250" fill="#f5fff8" font-family="Arial,sans-serif" font-size="21" font-weight="700">SIM7600G-H</text>
+    <text x="604" y="278" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">Dev board + LTE</text>
+    <text x="604" y="300" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">and GNSS antennas</text>
+    <text x="444" y="354" fill="#8de34e" font-family="Arial,sans-serif" font-size="17" font-weight="700">US$35–60</text>
+
+    <rect x="796" y="194" width="340" height="186" rx="22" fill="#132a20" stroke="#31503e"/>
+    <rect x="824" y="223" width="94" height="70" rx="8" fill="#1e392f" stroke="#8de34e"/>
+    <path d="M843 243h56M843 258h56M843 273h56" stroke="#8de34e" stroke-width="4"/>
+    <rect x="954" y="223" width="67" height="70" rx="8" fill="#1e392f" stroke="#50b8d8"/>
+    <circle cx="988" cy="258" r="15" fill="none" stroke="#50b8d8" stroke-width="4"/>
+    <rect x="1052" y="223" width="54" height="70" rx="8" fill="#1e392f" stroke="#e0bd62"/>
+    <path d="M1065 274l14-34 14 34" fill="none" stroke="#e0bd62" stroke-width="4"/>
+    <text x="824" y="327" fill="#f5fff8" font-family="Arial,sans-serif" font-size="20" font-weight="700">Sensors + controls</text>
+    <text x="824" y="354" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">INA219 • BH1750 • NTC • relay</text>
+  </g>
+
+  <g>
+    <rect x="64" y="410" width="1072" height="184" rx="22" fill="#0f241b" stroke="#31503e"/>
+    <text x="88" y="447" fill="#f5fff8" font-family="Arial,sans-serif" font-size="21" font-weight="700">Accessories that prevent false failures</text>
+    <g font-family="Arial,sans-serif" font-size="17" fill="#dcece2">
+      <circle cx="103" cy="486" r="8" fill="#8de34e"/><text x="123" y="492">5 V / 3 A regulated modem supply*</text>
+      <circle cx="103" cy="528" r="8" fill="#8de34e"/><text x="123" y="534">Breadboard, jumpers and multimeter</text>
+      <circle cx="434" cy="486" r="8" fill="#8de34e"/><text x="454" y="492">Activated 4G nano-SIM with data</text>
+      <circle cx="434" cy="528" r="8" fill="#8de34e"/><text x="454" y="534">Low-voltage LED test load only</text>
+      <circle cx="781" cy="486" r="8" fill="#8de34e"/><text x="801" y="492">Laptop with VS Code + PlatformIO</text>
+      <circle cx="781" cy="528" r="8" fill="#8de34e"/><text x="801" y="534">Two known-good USB data cables</text>
+    </g>
+    <text x="88" y="572" fill="#e0bd62" font-family="Arial,sans-serif" font-size="14">*Use the input voltage specified by your exact SIM7600 development board.</text>
+  </g>
+  <rect x="64" y="615" width="1072" height="1" fill="#31503e"/>
+  <text x="64" y="646" fill="#aac0b3" font-family="Arial,sans-serif" font-size="15">Prototype electronics target: about US$65–110, excluding tools, shipping and mobile data.</text>
+</svg>

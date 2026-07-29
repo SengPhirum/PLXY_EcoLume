@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 3: Connect ESP32 to SIM7600</title>
+  <desc id="desc">Exact EcoLume reference UART wiring with crossed TX and RX, common ground, and optional board-specific power control pins.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient><marker id="greenArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#8de34e"/></marker><marker id="blueArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#50b8d8"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 3</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Cross TX and RX; share ground</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">This drawing matches include/config.example.h.</text>
+
+  <rect x="72" y="199" width="314" height="358" rx="26" fill="#173428" stroke="#8de34e" stroke-width="2"/>
+  <text x="111" y="246" fill="#f5fff8" font-family="Arial,sans-serif" font-size="27" font-weight="700">ESP32 DevKit</text>
+  <g font-family="Arial,sans-serif" font-size="17" font-weight="700">
+    <rect x="106" y="286" width="162" height="46" rx="10" fill="#24483a"/><text x="124" y="315" fill="#f5fff8">GPIO 26 • RX</text>
+    <rect x="106" y="352" width="162" height="46" rx="10" fill="#24483a"/><text x="124" y="381" fill="#f5fff8">GPIO 27 • TX</text>
+    <rect x="106" y="418" width="162" height="46" rx="10" fill="#24483a"/><text x="124" y="447" fill="#f5fff8">GND</text>
+    <rect x="106" y="484" width="162" height="46" rx="10" fill="#392e20"/><text x="124" y="513" fill="#ffe1a1">GPIO 4 / 25</text>
+  </g>
+  <circle cx="292" cy="309" r="9" fill="#8de34e"/><circle cx="292" cy="375" r="9" fill="#50b8d8"/><circle cx="292" cy="441" r="9" fill="#aac0b3"/><circle cx="292" cy="507" r="9" fill="#e0bd62"/>
+
+  <rect x="814" y="199" width="314" height="358" rx="26" fill="#17302f" stroke="#50b8d8" stroke-width="2"/>
+  <text x="856" y="246" fill="#f5fff8" font-family="Arial,sans-serif" font-size="27" font-weight="700">SIM7600 board</text>
+  <g font-family="Arial,sans-serif" font-size="17" font-weight="700">
+    <rect x="932" y="286" width="162" height="46" rx="10" fill="#263c39"/><text x="972" y="315" fill="#f5fff8">TXD</text>
+    <rect x="932" y="352" width="162" height="46" rx="10" fill="#263c39"/><text x="972" y="381" fill="#f5fff8">RXD</text>
+    <rect x="932" y="418" width="162" height="46" rx="10" fill="#263c39"/><text x="972" y="447" fill="#f5fff8">GND</text>
+    <rect x="932" y="484" width="162" height="46" rx="10" fill="#392e20"/><text x="952" y="513" fill="#ffe1a1">PWRKEY / EN</text>
+  </g>
+  <circle cx="908" cy="309" r="9" fill="#8de34e"/><circle cx="908" cy="375" r="9" fill="#50b8d8"/><circle cx="908" cy="441" r="9" fill="#aac0b3"/><circle cx="908" cy="507" r="9" fill="#e0bd62"/>
+
+  <path d="M301 309H898" stroke="#8de34e" stroke-width="6" marker-start="url(#greenArrow)"/>
+  <text x="501" y="291" fill="#8de34e" font-family="Arial,sans-serif" font-size="17" font-weight="700">MODEM TXD → ESP32 RX 26</text>
+  <path d="M301 375H898" stroke="#50b8d8" stroke-width="6" marker-end="url(#blueArrow)"/>
+  <text x="501" y="357" fill="#50b8d8" font-family="Arial,sans-serif" font-size="17" font-weight="700">ESP32 TX 27 → MODEM RXD</text>
+  <path d="M301 441H898" stroke="#aac0b3" stroke-width="6"/>
+  <text x="535" y="427" fill="#aac0b3" font-family="Arial,sans-serif" font-size="16" font-weight="700">COMMON GROUND</text>
+  <path d="M301 507H898" stroke="#e0bd62" stroke-width="4" stroke-dasharray="12 9"/>
+  <text x="430" y="493" fill="#e0bd62" font-family="Arial,sans-serif" font-size="15" font-weight="700">OPTIONAL — ONLY AFTER CHECKING BOARD SCHEMATIC</text>
+
+  <rect x="72" y="582" width="1056" height="56" rx="14" fill="#301a19" stroke="#ef6b62"/>
+  <text x="98" y="617" fill="#ffcbc7" font-family="Arial,sans-serif" font-size="17" font-weight="700">Confirm UART voltage compatibility. ESP32 GPIO is 3.3 V logic and is not 5 V tolerant.</text>
+</svg>

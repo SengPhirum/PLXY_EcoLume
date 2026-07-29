@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Step 7: Run the first EcoLume telemetry test</title>
+  <desc id="desc">Attach antennas, insert the SIM while powered off, obtain cellular and GNSS service, and confirm telemetry in the EcoLume admin system.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071410"/><stop offset="1" stop-color="#0d2018"/></linearGradient><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L9 3 0 6z" fill="#8de34e"/></marker></defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#8de34e" font-family="Arial,sans-serif" font-size="22" font-weight="700">ECOLUME FIRMWARE • STEP 7</text>
+  <text x="64" y="119" fill="#f5fff8" font-family="Arial,sans-serif" font-size="38" font-weight="700">Prove the complete data path</text>
+  <text x="64" y="153" fill="#aac0b3" font-family="Arial,sans-serif" font-size="19">Test outdoors or beside a window for the first GNSS fix.</text>
+
+  <g font-family="Arial,sans-serif">
+    <rect x="62" y="210" width="229" height="275" rx="24" fill="#132a20" stroke="#31503e"/>
+    <circle cx="97" cy="246" r="19" fill="#8de34e"/><text x="91" y="253" fill="#071410" font-size="18" font-weight="700">1</text>
+    <path d="M136 289c30-38 60-38 90 0M151 307c20-24 40-24 60 0M171 328c7-8 13-8 20 0" fill="none" stroke="#50b8d8" stroke-width="6" stroke-linecap="round"/>
+    <rect x="129" y="353" width="96" height="55" rx="8" fill="#263c39" stroke="#50b8d8"/>
+    <text x="102" y="437" fill="#f5fff8" font-size="18" font-weight="700">Power OFF first</text>
+    <text x="91" y="463" fill="#aac0b3" font-size="14">Attach LTE + GNSS antennas</text>
+
+    <path d="M291 347H329" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+    <rect x="339" y="210" width="229" height="275" rx="24" fill="#132a20" stroke="#31503e"/>
+    <circle cx="374" cy="246" r="19" fill="#8de34e"/><text x="368" y="253" fill="#071410" font-size="18" font-weight="700">2</text>
+    <rect x="412" y="286" width="82" height="111" rx="10" fill="#e0bd62"/>
+    <path d="M429 286v-23h48v23M430 319h48M430 341h48" fill="none" stroke="#071410" stroke-width="5"/>
+    <text x="396" y="437" fill="#f5fff8" font-size="18" font-weight="700">Insert active SIM</text>
+    <text x="381" y="463" fill="#aac0b3" font-size="14">PIN/APN must match config.h</text>
+
+    <path d="M568 347H606" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+    <rect x="616" y="210" width="229" height="275" rx="24" fill="#132a20" stroke="#31503e"/>
+    <circle cx="651" cy="246" r="19" fill="#8de34e"/><text x="645" y="253" fill="#071410" font-size="18" font-weight="700">3</text>
+    <path d="M690 355v-54M690 301l-27 39M690 301l27 39M659 355h62" fill="none" stroke="#8de34e" stroke-width="6" stroke-linecap="round"/>
+    <path d="M734 283c28 20 28 45 0 65M750 263c47 33 47 73 0 106" fill="none" stroke="#50b8d8" stroke-width="5"/>
+    <text x="664" y="437" fill="#f5fff8" font-size="18" font-weight="700">Power ON + wait</text>
+    <text x="648" y="463" fill="#aac0b3" font-size="14">LTE registration, then GNSS fix</text>
+
+    <path d="M845 347H883" stroke="#8de34e" stroke-width="5" marker-end="url(#arrow)"/>
+    <rect x="893" y="210" width="243" height="275" rx="24" fill="#173428" stroke="#8de34e" stroke-width="2"/>
+    <circle cx="928" cy="246" r="19" fill="#8de34e"/><text x="922" y="253" fill="#071410" font-size="18" font-weight="700">4</text>
+    <rect x="939" y="281" width="151" height="105" rx="10" fill="#0b1813" stroke="#5c7868"/>
+    <path d="M960 355l27-25 25 14 36-42" fill="none" stroke="#8de34e" stroke-width="5"/>
+    <circle cx="960" cy="355" r="5" fill="#8de34e"/><circle cx="987" cy="330" r="5" fill="#8de34e"/><circle cx="1012" cy="344" r="5" fill="#8de34e"/><circle cx="1048" cy="302" r="5" fill="#8de34e"/>
+    <text x="935" y="437" fill="#f5fff8" font-size="18" font-weight="700">Confirm in Admin</text>
+    <text x="929" y="463" fill="#aac0b3" font-size="14">Last seen + location + telemetry</text>
+  </g>
+
+  <rect x="62" y="522" width="1074" height="104" rx="18" fill="#0f241b" stroke="#31503e"/>
+  <text x="88" y="554" fill="#f5fff8" font-family="Arial,sans-serif" font-size="17" font-weight="700">Pass criteria:</text>
+  <text x="217" y="554" fill="#dcece2" font-family="Arial,sans-serif" font-size="16">asset becomes online; timestamp advances; latitude/longitude are plausible; sensor values change.</text>
+  <text x="88" y="585" fill="#e0bd62" font-family="Arial,sans-serif" font-size="15">First GNSS fix can take several minutes with clear sky. Never transmit without the LTE antenna attached.</text>
+  <text x="88" y="608" fill="#aac0b3" font-family="Arial,sans-serif" font-size="14">Keep the lamp disconnected until communications and fail-safe behavior have been verified.</text>
+</svg>
