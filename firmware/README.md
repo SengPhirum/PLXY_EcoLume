@@ -21,6 +21,22 @@ The **reference build** is recommended first because the current source already 
 
 ![EcoLume low-voltage bench equipment](docs/images/01-equipment-overview.svg)
 
+### Actual products to recognize in the market
+
+These are real, searchable examples so a buyer can recognize each part. They are reference products, not mandatory brands; compare the exact voltage, connector, radio band, and pin labels before buying. The photos are stored in this repository so the guide still works offline.
+
+| Product photo | What to search for |
+|---|---|
+| <img src="../docs/assets/equipment/esp32-devkitc-v4.png" alt="Espressif ESP32-DevKitC V4 development board" width="260"><br>**Espressif ESP32-DevKitC V4** | Search: `ESP32-DevKitC V4 ESP32-WROOM-32E`<br>[Official board guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html)<br>This is the closest recognizable reference for the `esp32dev` pin map used below. |
+| <img src="../docs/assets/equipment/sim7600g-h-4g-hat.jpg" alt="Waveshare SIM7600G-H 4G HAT B" width="260"><br>**Waveshare SIM7600G-H 4G HAT (B)** | Search: `Waveshare SIM7600G-H 4G HAT B global GNSS`<br>[Manufacturer product page](https://www.waveshare.com/sim7600g-h-4g-hat-b.htm)<br>Look for the board, LTE/GNSS antennas, USB cable, and correct power accessories. |
+| <img src="../docs/assets/equipment/ina219-breakout.jpg" alt="Adafruit INA219 current sensor breakout" width="260"><br>**Adafruit INA219 breakout, product 904** | Search: `Adafruit 904 INA219 current sensor breakout`<br>[Manufacturer product page](https://www.adafruit.com/product/904)<br>Use only for the low-voltage DC experiment described in this guide. |
+| <img src="../docs/assets/equipment/bh1750-breakout.jpg" alt="Adafruit BH1750 ambient light sensor breakout" width="260"><br>**Adafruit BH1750 breakout, product 4681** | Search: `Adafruit 4681 BH1750 light sensor`<br>[Manufacturer product page](https://www.adafruit.com/product/4681)<br>Generic GY-302/BH1750 boards can also work if their voltage and I²C pins match. |
+| <img src="../docs/assets/equipment/ntc-10k-thermistor.jpg" alt="Adafruit 10K one-percent NTC thermistor" width="260"><br>**10 kΩ NTC thermistor, B3950** | Search: `10K NTC thermistor 1% B3950` or `Adafruit 4890`<br>[Manufacturer product page](https://www.adafruit.com/product/4890)<br>Buy a separate 10 kΩ 1% resistor for the voltage divider. |
+| <img src="../docs/assets/equipment/dfrobot-dfr0017-relay.jpg" alt="DFRobot DFR0017 opto-isolated relay module" width="260"><br>**DFRobot DFR0017 relay module** | Search: `DFRobot DFR0017 opto isolated relay module`<br>[Manufacturer product page](https://www.dfrobot.com/product-64.html)<br>Use this pictured module only for safe bench ON/OFF tests. It is **not** the street-light mains contactor. |
+| <img src="../docs/assets/equipment/sparkfun-microswitch.jpg" alt="SparkFun three-terminal microswitch" width="260"><br>**SparkFun COM-09506 three-terminal microswitch** | Search: `SparkFun COM-09506 microswitch 3 terminal`<br>[Manufacturer product page](https://www.sparkfun.com/microswitch-3-terminal.html)<br>A three-terminal COM/NO/NC switch makes it easy to follow the normally-closed tamper wiring below. |
+
+The SIM card, antennas, power supply, cables, breadboard, jumpers, and low-voltage test load are generic accessories. Match each antenna and connector to the exact modem kit, and follow the modem-board manual for its supply. For field-ready power, surge protection, metering, and enclosure examples, see the [hardware equipment and picture guide](../docs/HARDWARE.md). Image origins are recorded in the [equipment source register](../docs/assets/equipment/SOURCES.md).
+
 ### Essential communication kit
 
 | Qty | Item | Minimum specification | Typical cost | Buying note |

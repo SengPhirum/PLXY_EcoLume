@@ -25,7 +25,7 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 - `backend/` — TypeScript/Express service with PostgreSQL, authenticated admin portal, device API, MQTT ingestion, alert rules, work orders, audit logs, and health checks.
 - `scripts/device-simulator.ts` — simulated street lights for demonstrations and load testing.
 - `docker-compose.yml` — PostgreSQL, Mosquitto, backend, and simulator-ready local deployment.
-- `docs/` — architecture, hardware, security, deployment, API, and field rollout guidance.
+- `docs/` — architecture, [hardware equipment and picture guide](docs/HARDWARE.md), security, deployment, API, and field rollout guidance.
 
 ## Core capabilities
 

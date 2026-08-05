@@ -41,6 +41,24 @@ flowchart TD
 
 These are budgeting ranges, not vendor quotations. Prices exclude tax, shipping, certification, installation, luminaire equipment, and replacement stock.
 
+### Actual products to recognize in the market
+
+These real product photos and exact search phrases make it easier to ask local electronics suppliers for comparable equipment. They are examples, not required vendors or approved Cambodia radio configurations.
+
+> [!WARNING]
+> A product photo does **not** confirm that its frequency variant, transmit power, channel plan, or antenna is legal for the project. Obtain written TRC confirmation first, then order every node radio, gateway concentrator, and antenna for that same approved band.
+
+| Product photo | What to search for |
+|---|---|
+| <img src="../docs/assets/equipment/esp32-devkitc-v4.png" alt="Espressif ESP32-DevKitC V4 development board" width="260"><br>**Espressif ESP32-DevKitC V4** | Search: `ESP32-DevKitC V4 ESP32-WROOM-32E`<br>[Official board guide](https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32/esp32-devkitc/user_guide.html)<br>Use with a separate SX1262 development board for the reference pin map below. |
+| <img src="../docs/assets/equipment/waveshare-core1262-hf.jpg" alt="Waveshare Core1262-HF SX1262 radio module" width="260"><br>**Waveshare Core1262-HF SX1262 module** | Search: `Waveshare Core1262-HF SX1262`<br>[Manufacturer product page](https://www.waveshare.com/core1262-868m.htm)<br>This is a form-factor example only. Select the exact approved LF/HF frequency variant and expect to make a carrier or adapter rather than placing the module directly on a breadboard. |
+| <img src="../docs/assets/equipment/heltec-wifi-lora-32-v4.png" alt="Heltec WiFi LoRa 32 V4 integrated development board" width="260"><br>**Heltec WiFi LoRa 32 V4** | Search: `Heltec WiFi LoRa 32 V4 ESP32-S3 SX1262`<br>[Manufacturer product page](https://heltec.org/project/wifi-lora-32-v4/)<br>This integrated alternative reduces wiring, but it needs a board-specific pin map and firmware adaptation; the reference code does not support it as a drop-in board. |
+| <img src="../docs/assets/equipment/raspberry-pi-4-model-b.jpg" alt="Raspberry Pi 4 Model B" width="260"><br>**Raspberry Pi 4 Model B** | Search: `Raspberry Pi 4 Model B`<br>[Manufacturer product page](https://www.raspberrypi.com/products/raspberry-pi-4-model-b/)<br>Suitable as the host for an indoor lab gateway when paired with a genuine multi-channel concentrator. |
+| <img src="../docs/assets/equipment/waveshare-sx130x-gateway-hat.jpg" alt="Waveshare SX1302 or SX1303 LoRaWAN gateway HAT" width="260"><br>**Waveshare SX1302/SX1303 LoRaWAN Gateway HAT** | Search: `Waveshare SX1303 LoRaWAN Gateway HAT 868M 915M`<br>[Manufacturer product page](https://www.waveshare.com/product/sx1302-868m-lorawan-gateway-b.htm)<br>Choose a Raspberry Pi-compatible, multi-channel concentrator in the approved band; do not substitute a single-channel LoRa receiver. |
+| <img src="../docs/assets/equipment/rak7289v2-wisgate-edge-pro.webp" alt="RAK WisGate Edge Pro V2 outdoor LoRaWAN gateway" width="260"><br>**RAK7289V2 / RAK7289CV2 WisGate Edge Pro V2** | Search: `RAK7289V2 RAK7289CV2 WisGate Edge Pro V2`<br>[Manufacturer product page](https://store.rakwireless.com/products/rak7289-8-16-channel-outdoor-lorawan-gateway)<br>A recognizable outdoor-gateway example. Compare the Ethernet, Wi-Fi, PoE, cellular-backhaul, channel-count, and approved-frequency options before ordering. |
+
+For recognizable sensor, power-supply, surge-protection, meter, and field-enclosure examples, see the [shared hardware equipment and picture guide](../docs/HARDWARE.md). Image origins are recorded in the [equipment source register](../docs/assets/equipment/SOURCES.md).
+
 ### Per-pole prototype
 
 | Qty | Equipment | Minimum requirement | Planning cost |
