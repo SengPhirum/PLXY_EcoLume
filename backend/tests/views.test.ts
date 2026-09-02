@@ -1,6 +1,7 @@
 import path from 'node:path';
 import ejs from 'ejs';
 import { describe, expect, it } from 'vitest';
+import { buildMapView, regionOptions } from '../src/services/regions.js';
 
 const user = { id: 'u1', username: 'admin', role: 'ADMIN' };
 const views = path.resolve('src/views');
@@ -21,10 +22,18 @@ describe('operations portal views', () => {
       energy: { today_kwh: '42.20' },
       recentAlerts: [],
       provinceStats: [{ code: 'PNH', name_en: 'Phnom Penh', name_km: 'ភ្នំពេញ', total: '6', online: '5' }],
-      mapLights: [{ id: '1', asset_code: 'KH-PNH-000001', status: 'ONLINE', latitude: 11.55, longitude: 104.92 }]
+      mapLights: [{ id: '1', asset_code: 'KH-PNH-000001', status: 'ONLINE', latitude: 11.55, longitude: 104.92 }],
+      map: buildMapView('KH', [{
+        id: '1', asset_code: 'KH-PNH-000001', status: 'ONLINE',
+        province_code: 'PNH', latitude: 11.55, longitude: 104.92
+      }]),
+      regions: regionOptions()
     });
-    expect(html).toContain('Cambodia operations map');
+    expect(html).toContain('Cambodia');
     expect(html).toContain('PLXY');
+    expect(html).toContain('map-canvas');
+    // The asset is drawn through the same projection as the boundaries.
+    expect(html).toMatch(/<circle class="map-pin online"/);
   });
 
   it('renders inventory and asset details', async () => {

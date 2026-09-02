@@ -13,23 +13,62 @@
 <div class="dashboard-grid">
   <section class="panel map-panel">
     <div class="panel-head">
-      <div><p class="eyebrow">Live fleet</p><h2>Cambodia operations map</h2></div>
-      <a class="text-link" href="/lights">View all assets →</a>
+      <div>
+        <p class="eyebrow">Live fleet</p>
+        <h2><%= map ? (map.kind === 'country' ? map.countryName : map.label) : 'Operations map' %></h2>
+      </div>
+      <div class="map-controls">
+        <form class="map-region" method="get" action="/">
+          <label class="visually-hidden" for="region">Map region</label>
+          <select id="region" name="region" onchange="this.form.submit()">
+            <% regions.forEach(option => { %>
+              <option value="<%= option.code %>"<%= map && option.code === map.code ? ' selected' : '' %>><%= option.label %></option>
+            <% }) %>
+          </select>
+          <noscript><button class="button small secondary" type="submit">Show</button></noscript>
+        </form>
+        <a class="text-link" href="/lights">View all assets →</a>
+      </div>
     </div>
-    <div class="operation-map">
-      <div class="map-grid"></div>
-      <span class="map-label north">LAO PDR</span><span class="map-label west">THAILAND</span><span class="map-label east">VIETNAM</span>
-      <% mapLights.forEach(light => {
-        const left = Math.max(7, Math.min(93, ((Number(light.longitude) - 102.2) / 5.5) * 100));
-        const top = Math.max(7, Math.min(93, ((14.8 - Number(light.latitude)) / 5.0) * 100));
-      %>
-        <a href="/lights/<%= light.id %>" class="map-pin <%= light.status.toLowerCase() %>"
-           style="left:<%= left %>%;top:<%= top %>%"
-           title="<%= light.asset_code %> · <%= light.status %>"><span></span></a>
-      <% }) %>
-      <div class="map-legend"><span><b class="dot ok"></b>Online</span><span><b class="dot amber-bg"></b>Offline</span><span><b class="dot red-bg"></b>Fault</span></div>
-      <small class="map-caption">Approximate operational view. Exact coordinates require authorized access.</small>
-    </div>
+    <% if (!map) { %>
+      <div class="empty-state">No boundary data is installed for this region.</div>
+    <% } else { %>
+      <div class="operation-map">
+        <svg class="map-canvas" viewBox="<%= map.viewBox %>" preserveAspectRatio="xMidYMid meet"
+             role="img" aria-label="<%= map.label %> with <%= map.lights.length %> mapped assets">
+          <g class="map-shapes" stroke-width="<%= (map.height / 700).toFixed(4) %>">
+            <% map.shapes.forEach(shape => { %>
+              <% if (map.shapes.length > 1) { %>
+                <a href="/?region=<%= map.country %>-<%= shape.code %>">
+                  <path d="<%= shape.path %>"><title><%= shape.name %></title></path>
+                </a>
+              <% } else { %>
+                <path d="<%= shape.path %>"><title><%= shape.name %></title></path>
+              <% } %>
+            <% }) %>
+          </g>
+          <g class="map-pins">
+            <% map.lights.forEach(light => { %>
+              <a href="/lights/<%= light.id %>">
+                <circle class="map-pin <%= light.status.toLowerCase() %>"
+                        cx="<%= light.x.toFixed(4) %>" cy="<%= light.y.toFixed(4) %>"
+                        r="<%= (map.height / 85).toFixed(4) %>">
+                  <title><%= light.asset_code %> · <%= light.status %></title>
+                </circle>
+              </a>
+            <% }) %>
+          </g>
+        </svg>
+        <div class="map-legend">
+          <span><b class="dot ok"></b>Online</span>
+          <span><b class="dot amber-bg"></b>Offline</span>
+          <span><b class="dot red-bg"></b>Fault</span>
+          <span><b class="dot violet-bg"></b>Maintenance</span>
+        </div>
+        <small class="map-caption"><%= map.lights.length %> mapped · <%= map.source %></small>
+      </div>
+      <% if (map.notice) { %><p class="map-notice"><%= map.notice %></p><% } %>
+    <% } %>
   </section>
 
   <section class="panel alerts-panel">
