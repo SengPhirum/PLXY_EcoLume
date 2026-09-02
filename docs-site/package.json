@@ -1,0 +1,19 @@
+{
+  "name": "@plxy/ecolume-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PLXY EcoLume documentation website and browser-based ESP32 installer",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "verify": "node verify.mjs",
+    "serve": "node build.mjs && node serve.mjs"
+  },
+  "dependencies": {
+    "esp-web-tools": "10.1.0",
+    "marked": "16.4.1"
+  }
+}

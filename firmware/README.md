@@ -17,6 +17,22 @@ Reference firmware and setup guide for a low-cost ESP32 street-light controller 
 
 The **reference build** is recommended first because the current source already uses its pin arrangement. An integrated board can cost slightly less after shipping, but it is not a drop-in replacement.
 
+## Install from a browser
+
+The fastest way to get a controller running is the
+[EcoLume web installer](https://sengphirum.github.io/PLXY_EcoLume/install/). Open it in
+desktop Chrome, Edge, or Opera, connect the ESP32 over USB, and click **Install**. The
+page serves the merged image from the latest stable firmware release, so a web install and
+a CI build are the same binary. Web Serial is unavailable in Firefox, Safari, and on mobile
+browsers; use the PlatformIO route below there.
+
+A freshly flashed controller carries no credentials. It holds the lamp on the local safety
+schedule, stays off the network, and waits for provisioning on the serial console — see
+[Provision over the serial console](#provision-over-the-serial-console).
+
+Building locally is unchanged and still the right choice for firmware development, for
+bench units with baked-in settings, and for air-gapped provisioning.
+
 ## Step 1 — Prepare the equipment
 
 ![EcoLume low-voltage bench equipment](docs/images/01-equipment-overview.svg)
@@ -209,6 +225,79 @@ pio device monitor --baud 115200
 ```
 
 PlatformIO downloads the pinned framework and libraries from `platformio.ini`. If upload remains at `Connecting...`, hold the ESP32 **BOOT** button, tap **EN/RESET**, and release **BOOT** when writing starts. A missing serial port usually means the USB cable is charge-only or the USB-UART driver is missing.
+
+`pio run` builds the `esp32-sim7600` bench environment and reports version `0.0.0-dev`.
+The `esp32-sim7600-release` environment is what CI publishes; it is the same firmware with
+quieter core logging and a version stamped in by the release workflow. To reproduce a
+release build and its installer artifacts locally:
+
+```bash
+printf '#define ECOLUME_FIRMWARE_VERSION "1.0.0"\n' > include/version.h
+pio run -e esp32-sim7600-release
+../firmware/scripts/package-firmware.sh 1.0.0
+```
+
+## Provision over the serial console
+
+Values in `include/config.h` are compile-time *defaults*. Anything stored on the device
+takes precedence, so one binary can serve a whole fleet while a bench unit keeps its
+baked-in settings.
+
+Open the serial console at 115200 baud — `pio device monitor`, any terminal program, or
+**Logs & Console** in the web installer — and type `help`:
+
+```text
+set device.id      KH-PNH-000001
+set device.token   <token issued when the asset was provisioned>
+set apn            <carrier APN>
+set apn.user       <only if the carrier requires it>
+set apn.password   <only if the carrier requires it>
+set sim.pin        <only if the SIM is PIN-locked>
+set mqtt.host      mqtt.example.gov.kh
+set mqtt.port      8883
+set mqtt.prefix    ecolume/v1
+reboot
+```
+
+| Command | Effect |
+|---|---|
+| `help` | List the commands and setting names |
+| `show` | Print the effective configuration, with secrets masked |
+| `set <name> <value>` | Store a setting in non-volatile memory |
+| `clear <name>` | Remove a stored setting and fall back to the compiled default |
+| `set-ca` | Paste a PEM root certificate, then a line containing only `END` |
+| `factory-reset` | Erase every stored setting before returning a unit from the field |
+| `reboot` | Restart so the stored settings take effect |
+
+Settings live in the ESP32's non-volatile storage, so they survive reboots and firmware
+updates. `show` never prints a token or SIM PIN in full. Run `factory-reset` before a
+controller leaves your custody.
+
+> [!IMPORTANT]
+> Issue a unique token per device from the operations portal. Never reuse a token across
+> poles, never copy a simulator token to a field unit, and never commit one to Git.
+
+## Transport security
+
+TinyGSM's SIM7600 driver does not implement the module's SSL stack, so this build speaks
+plaintext MQTT. The firmware refuses to publish anything until an operator explicitly
+accepts that:
+
+```text
+set mqtt.insecure true
+```
+
+Use that **only** on an isolated bench network. For a field deployment choose one of:
+
+- terminate TLS at a gateway inside a private APN, so the pole never crosses the public
+  internet in the clear;
+- move to a modem whose TinyGSM driver implements SSL (for example SIM7000/SIM7080/A7672X),
+  which makes the firmware select `TinyGsmClientSecure` automatically; or
+- link a TLS wrapper such as `govorox/SSLClient` over the TinyGSM client — note that it is
+  GPL-3.0-or-later, which imposes licence obligations on the distributed firmware.
+
+`set-ca` stores the broker's root certificate on the device, so a TLS-capable build can be
+pointed at the production broker without recompiling.
 
 ## Step 7 — First end-to-end test
 

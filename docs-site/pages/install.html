@@ -1,0 +1,105 @@
+<section class="hero" style="padding:70px 0 46px">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <span class="eyebrow"><i></i>Web Serial installer</span>
+    <h1 style="margin:20px 0 14px;font-size:clamp(32px,4.4vw,48px);line-height:1.08;letter-spacing:-.035em">Install EcoLume on an ESP32</h1>
+    <p class="lede" style="margin:0">Connect the board over USB and flash the latest stable firmware release straight from this page. No toolchain, no command line, no manual reset dance.</p>
+  </div>
+</section>
+
+<div class="wrap install-shell">
+  <div>
+    <div class="install-card" data-reveal>
+      <h2>Flash the controller</h2>
+      <p>Close every other serial monitor first — only one program can hold the port at a time.</p>
+      <div class="install-action">
+        <esp-web-install-button manifest="{{MANIFEST_URL}}">
+          <button class="btn btn-primary" slot="activate">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>
+            Install EcoLume {{FIRMWARE_VERSION}}
+          </button>
+          <div class="unsupported" slot="unsupported">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            <span>This browser cannot talk to serial devices. Use desktop Chrome, Edge, or Opera — Web Serial is not available on Firefox, Safari, or mobile browsers. You can still <a href="{{BASE}}/docs/firmware/#step-6-configure-and-flash">build and flash locally with PlatformIO</a>.</span>
+          </div>
+          <div class="unsupported" slot="not-allowed">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            <span>Web Serial needs a secure context. Open this page over HTTPS (or on <code>localhost</code>) and try again.</span>
+          </div>
+        </esp-web-install-button>
+      </div>
+      <div class="release-meta">
+        <span class="chip brand"><b>{{FIRMWARE_VERSION}}</b> {{FIRMWARE_CHANNEL}}</span>
+        <span class="chip">Chip <b>ESP32</b></span>
+        <span class="chip">Image <b>{{FIRMWARE_SIZE}}</b></span>
+        <span class="chip">Built <b>{{FIRMWARE_BUILT}}</b></span>
+        <span class="chip"><a href="{{RELEASE_URL}}">Release notes &amp; checksums</a></span>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:44px">
+      <h2 id="what-happens">What the installer does</h2>
+      <p>The button opens the ESP Web Tools dialog, which erases the flash and writes a single merged image at offset <code>0x0</code>: bootloader, partition table, OTA selector, and the EcoLume application. The image is the exact artifact published by the firmware release workflow, so a web install and a CI build are byte-identical.</p>
+
+      <h2 id="provision">Provision the controller</h2>
+      <p>A freshly flashed controller carries no credentials. It holds the lamp at the safe local brightness, stays off the network, and waits to be provisioned. Open <strong>Logs &amp; Console</strong> in the installer dialog (or any serial monitor at 115200 baud) and enter the device's own values:</p>
+      <pre><code>set device.id    KH-PNH-004182
+set device.token &lt;the token issued when the asset was provisioned&gt;
+set apn          &lt;carrier APN&gt;
+set mqtt.host    mqtt.example.gov.kh
+set mqtt.port    8883
+reboot</code></pre>
+      <p>Each <code>set</code> writes straight to the ESP32's non-volatile storage and takes effect after <code>reboot</code>, so settings survive reboots and firmware updates. Type <code>help</code> for the full command list, <code>show</code> to review the current configuration (secrets are masked), <code>set-ca</code> to paste a broker root certificate, and <code>factory-reset</code> to erase the device identity before returning a controller from the field.</p>
+      <blockquote><p>Issue a unique token per device from the operations portal. Never reuse a token across poles, and never commit one to source control.</p></blockquote>
+
+      <h2 id="transport">Transport security</h2>
+      <p>TinyGSM's SIM7600 driver does not implement the module's SSL stack, so this build speaks plaintext MQTT and <strong>refuses to publish until an operator explicitly accepts that</strong> with <code>set mqtt.insecure true</code>. Use that only on an isolated bench network. For field deployments, terminate TLS at a gateway inside a private APN, move to a modem whose TinyGSM driver implements SSL, or link a TLS wrapper over the TinyGSM client. The <a href="{{BASE}}/docs/firmware/#transport-security">firmware guide</a> covers each option and its trade-offs.</p>
+
+      <h2 id="verify">Verify the installation</h2>
+      <ol>
+        <li>The console prints the firmware version, the device identity, and the broker it is dialling.</li>
+        <li>The controller registers on the cellular network and connects to the MQTT broker over TLS.</li>
+        <li>Within one telemetry interval (60 seconds) the asset turns <strong>ONLINE</strong> in the operations portal with live voltage, current, and power.</li>
+        <li>Send a brightness command from the asset page and confirm the device acknowledges it.</li>
+      </ol>
+
+      <h2 id="local-build">Prefer a local build?</h2>
+      <p>Nothing here replaces the normal workflow. The PlatformIO project is unchanged:</p>
+      <pre><code>cd firmware
+cp include/config.example.h include/config.h
+pio run                 # build
+pio run -t upload       # flash over USB
+pio device monitor      # serial console</code></pre>
+      <p>Values compiled into <code>config.h</code> act as defaults; anything stored on the device takes precedence. That lets one binary serve a whole fleet while a bench unit keeps its baked-in settings.</p>
+    </div>
+  </div>
+
+  <aside>
+    <div class="side-card" data-reveal>
+      <h3>Before you start</h3>
+      <ul>
+        <li>Desktop Chrome, Edge, or Opera (Web Serial).</li>
+        <li>A USB <em>data</em> cable — charge-only cables will not enumerate.</li>
+        <li>CP210x or CH34x USB-serial drivers, if your OS does not ship them.</li>
+        <li>The board powered from USB only, disconnected from mains wiring.</li>
+      </ul>
+    </div>
+    <div class="side-card" data-reveal>
+      <h3>If the board is not listed</h3>
+      <ul>
+        <li>Close other serial monitors, then unplug and replug the board.</li>
+        <li>Hold <strong>BOOT</strong> while the installer connects, and release it once flashing starts.</li>
+        <li>Try a different USB port or cable; hubs are a frequent culprit.</li>
+        <li>Confirm the port appears in your operating system's device list.</li>
+      </ul>
+    </div>
+    <div class="side-card" data-reveal>
+      <h3>Safety</h3>
+      <ul>
+        <li>Never connect an ESP32 directly to mains voltage.</li>
+        <li>Use certified isolation, surge protection, and earthing on the pole.</li>
+        <li>A qualified electrical engineer must approve every mains-connected part.</li>
+      </ul>
+    </div>
+  </aside>
+</div>

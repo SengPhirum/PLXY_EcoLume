@@ -18,6 +18,7 @@ COPY --from=build /app/backend/dist ./dist
 COPY backend/src/views ./src/views
 COPY backend/src/public ./src/public
 COPY backend/migrations ./migrations
+COPY brand /app/brand
 USER node
 EXPOSE 8080
 CMD ["node", "dist/backend/src/server.js"]

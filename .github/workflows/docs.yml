@@ -1,0 +1,127 @@
+name: Documentation site
+
+# Builds docs-site/ on every documentation change and publishes it to GitHub
+# Pages from the default branch and whenever a firmware release is published, so
+# the browser installer always serves the newest stable build.
+#
+# One-time setup: Settings → Pages → Build and deployment → Source: GitHub Actions.
+on:
+  push:
+    paths:
+      - "docs-site/**"
+      - "docs/**"
+      - "brand/**"
+      - "README.md"
+      - "firmware/README.md"
+      - "firmware-lorawan/README.md"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    paths:
+      - "docs-site/**"
+      - "docs/**"
+      - "brand/**"
+      - "README.md"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: docs-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.mode.outputs.deploy }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Decide whether this run publishes
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "release" ] || \
+             [ "${{ github.ref_name }}" = "${{ github.event.repository.default_branch }}" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Building and verifying only; Pages publishes from ${{ github.event.repository.default_branch }}."
+          fi
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Configure Pages
+        id: pages
+        if: steps.mode.outputs.deploy == 'true'
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Install dependencies
+        run: npm --prefix docs-site ci
+
+      - name: Bundle the latest stable firmware release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 50 \
+            --json tagName,isPrerelease,isDraft \
+            --jq '[.[] | select(.isDraft == false and .isPrerelease == false
+                   and (.tagName | startswith("firmware-v")))][0].tagName // ""')"
+          if [ -z "$tag" ]; then
+            echo "::notice::No stable firmware release found; the installer page will point at the local PlatformIO build."
+            exit 0
+          fi
+          mkdir -p docs-site/firmware-dist
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" \
+            --dir docs-site/firmware-dist \
+            --pattern 'manifest.json' --pattern '*.bin' --pattern 'SHA256SUMS'
+          # Only the merged image is flashed from the browser; the bare
+          # application image stays a release asset for offline and OTA use.
+          rm -f docs-site/firmware-dist/*-app.bin
+          echo "::notice::Installer bundled with firmware release ${tag}"
+
+      - name: Build
+        env:
+          # Falls back to the project-site path when Pages was not configured,
+          # so a validation run produces the same URLs as a published one.
+          SITE_BASE: ${{ steps.pages.outputs.base_path || format('/{0}', github.event.repository.name) }}
+          SITE_ORIGIN: ${{ steps.pages.outputs.origin || format('https://{0}.github.io', github.repository_owner) }}
+          FIRMWARE_DIR: ${{ github.workspace }}/docs-site/firmware-dist
+        run: npm --prefix docs-site run build
+
+      - name: Verify the built site
+        env:
+          SITE_BASE: ${{ steps.pages.outputs.base_path || format('/{0}', github.event.repository.name) }}
+        run: npm --prefix docs-site run verify
+
+      - uses: actions/upload-pages-artifact@v4
+        if: steps.mode.outputs.deploy == 'true'
+        with:
+          path: docs-site/site
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    if: needs.build.outputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="currentColor" role="img" aria-label="EcoLume">
+  <title>EcoLume</title>
+  <rect x="21.5" y="15" width="15" height="6.5" rx="3.25"/>
+  <path fill-rule="evenodd" d="M23 23h12l8.5 22.5a25 25 0 0 1-29 0Zm10 3-9 13h5.5l-3 10L35.5 35.5h-5Z"/>
+  <path d="M36.56 13.64a9 9 0 0 1 6.9 5.78" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/>
+  <path d="M37.34 9.21a13.5 13.5 0 0 1 10.35 8.67" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/>
+</svg>

@@ -23,6 +23,37 @@ Street lighting is critical public infrastructure. Production deployment require
 - Rotate secrets in a secret manager, not `.env` files, in production.
 - Restrict exact asset coordinates to authorized operational roles.
 
+## Transport security on the SIM7600 build
+
+TinyGSM 0.12.0 does not implement the SIM7600's SSL stack, so the reference firmware
+speaks plaintext MQTT. The firmware treats that as a fault rather than a default: it
+refuses to publish until an operator sets `mqtt.insecure true` on the provisioning
+console, and it repeats a warning on the serial log while it is held back.
+
+Before a field deployment, close the gap with one of:
+
+| Option | Effect | Cost |
+|---|---|---|
+| TLS-terminating gateway inside a private APN | Traffic never crosses the public internet in the clear | Carrier private-APN contract |
+| Modem whose TinyGSM driver implements SSL (SIM7000, SIM7080, A7672X) | Firmware selects `TinyGsmClientSecure` automatically, no code change | Hardware change |
+| TLS wrapper over the TinyGSM client, e.g. `govorox/SSLClient` | End-to-end TLS on the existing hardware | GPL-3.0-or-later obligations on the distributed firmware |
+
+`set-ca` stores the broker's root certificate in device storage, so a TLS-capable build can
+be pointed at the production broker without recompiling.
+
+## Device provisioning and secrets
+
+Web-installed firmware ships with no credentials at all. Each controller is given its
+identity over the serial console, and the values are held in the ESP32's non-volatile
+storage rather than in the binary:
+
+- One immutable device ID and one unique token per pole; never reuse a token.
+- `show` masks tokens, passwords, and SIM PINs.
+- `factory-reset` erases every stored setting; run it before a controller leaves your
+  custody, is returned under warranty, or is scrapped.
+- Published firmware images are identical for every device, so a leaked image discloses no
+  credentials. Verify downloads against the `SHA256SUMS` file in the release.
+
 ## MQTT production changes
 
 The included `mosquitto.conf` allows anonymous local development traffic and must not be exposed publicly. Production should use:

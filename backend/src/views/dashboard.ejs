@@ -4,7 +4,7 @@
     <div><p>Network availability</p><strong><%= fleet.total > 0 ? ((Number(fleet.online) / Number(fleet.total)) * 100).toFixed(1) : '0.0' %><small>%</small></strong></div>
     <span class="pulse-ring"><i></i></span>
   </div>
-  <div class="summary-card"><p>Managed lights</p><strong><%= Number(fleet.total).toLocaleString() %></strong><small><b class="dot green"></b><%= fleet.online %> online</small></div>
+  <div class="summary-card"><p>Managed lights</p><strong><%= Number(fleet.total).toLocaleString() %></strong><small><b class="dot ok"></b><%= fleet.online %> online</small></div>
   <div class="summary-card"><p>Needs attention</p><strong class="amber"><%= Number(fleet.offline) + Number(fleet.fault) %></strong><small><b class="dot amber-bg"></b><%= fleet.offline %> offline · <%= fleet.fault %> fault</small></div>
   <div class="summary-card"><p>Open alerts</p><strong class="red"><%= alerts.total %></strong><small><b class="dot red-bg"></b><%= alerts.critical %> critical</small></div>
   <div class="summary-card"><p>Energy today</p><strong><%= energy.today_kwh %><small> kWh</small></strong><small><%= workOrders.open %> active work orders</small></div>
@@ -27,7 +27,7 @@
            style="left:<%= left %>%;top:<%= top %>%"
            title="<%= light.asset_code %> · <%= light.status %>"><span></span></a>
       <% }) %>
-      <div class="map-legend"><span><b class="dot green"></b>Online</span><span><b class="dot amber-bg"></b>Offline</span><span><b class="dot red-bg"></b>Fault</span></div>
+      <div class="map-legend"><span><b class="dot ok"></b>Online</span><span><b class="dot amber-bg"></b>Offline</span><span><b class="dot red-bg"></b>Fault</span></div>
       <small class="map-caption">Approximate operational view. Exact coordinates require authorized access.</small>
     </div>
   </section>
