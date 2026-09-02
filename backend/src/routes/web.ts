@@ -5,6 +5,8 @@ import {
   clearSessionCookie, requireAuth, setSessionCookie, signSession, verifyPassword
 } from '../security.js';
 import type { AuthenticatedRequest, SessionUser } from '../types.js';
+import { config } from '../config.js';
+import { buildMapView, regionOptions, resolveRegion, type MappedLight } from '../services/regions.js';
 
 export const webRouter = Router();
 
@@ -90,11 +92,15 @@ webRouter.get('/', async (request: AuthenticatedRequest, response) => {
        FROM provinces p LEFT JOIN lights l ON l.province_id = p.id AND l.status <> 'RETIRED'
        GROUP BY p.id ORDER BY p.name_en`
     ),
-    query(
-      `SELECT id, asset_code, name, status, latitude, longitude
-       FROM lights WHERE latitude IS NOT NULL AND longitude IS NOT NULL AND status <> 'RETIRED'`
+    query<MappedLight & { name: string }>(
+      `SELECT l.id, l.asset_code, l.name, l.status, l.latitude, l.longitude, p.code province_code
+       FROM lights l JOIN provinces p ON p.id = l.province_id
+       WHERE l.latitude IS NOT NULL AND l.longitude IS NOT NULL AND l.status <> 'RETIRED'`
     )
   ]);
+
+  const region = resolveRegion(request.query.region, config.MAP_REGION);
+  const map = buildMapView(region, mapLights.rows);
 
   response.render('dashboard', {
     title: 'National operations',
@@ -106,7 +112,9 @@ webRouter.get('/', async (request: AuthenticatedRequest, response) => {
     energy: energy.rows[0] ?? {},
     recentAlerts: recentAlerts.rows,
     provinceStats: provinceStats.rows,
-    mapLights: mapLights.rows
+    mapLights: mapLights.rows,
+    map,
+    regions: regionOptions()
   });
 });
 

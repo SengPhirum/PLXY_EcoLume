@@ -19,6 +19,7 @@ const schema = z.object({
   MQTT_PASSWORD: z.string().optional(),
   MQTT_TOPIC_PREFIX: z.string().default('ecolume/v1'),
   DEVICE_DEMO_TOKEN: z.string().min(16).optional(),
+  MAP_REGION: z.string().regex(/^[A-Z]{2}(-[A-Z0-9]{1,8})?$/).default('KH'),
   OFFLINE_AFTER_MINUTES: z.coerce.number().int().min(2).max(1440).default(15),
   TELEMETRY_RETENTION_DAYS: z.coerce.number().int().min(30).max(3650).default(365)
 });

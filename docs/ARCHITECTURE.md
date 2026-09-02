@@ -42,6 +42,31 @@ The MVP queue is memory-backed. Production firmware should persist a wear-levell
 - Commands record desired state before MQTT publication and remain queued if the broker is unavailable.
 - The offline monitor changes device state when telemetry exceeds the configured threshold.
 
+## Operations map
+
+The live-fleet map is rendered server-side as SVG from boundary data bundled in
+`backend/src/public/geo/`. No tile service is contacted, so an operations centre
+without internet access keeps working and the position of ministry assets is
+never disclosed to a third-party host by the act of drawing them.
+
+`MAP_REGION` sets the default view (`KH` for the whole country, `KH-PNH` for one
+province); operators can switch region from the dashboard, and the choice rides
+in the `?region=` query string. Boundary outlines and asset pins share a single
+projection in `services/regions.ts`, so a pin cannot drift away from the outline
+beneath it.
+
+> [!IMPORTANT]
+> The bundled boundaries come from Natural Earth 1:10m (public domain). They are
+> generalized cartographic data for display, **not a legal boundary source**, and
+> the vintage predates the 2013 creation of Tboung Khmum — that province is
+> selectable but falls back to the national outline. Before ministry acceptance,
+> replace `backend/src/public/geo/kh.json` with the official national boundary
+> file and re-run `tools/build-region-data.mjs`.
+
+Adding another country is a data change, not a code change: add its ISO
+subdivision-to-province mapping in `tools/build-region-data.mjs`, regenerate, and
+the new country appears in the region selector.
+
 ## Scaling targets
 
 Example sizing for 100,000 lights at one sample/minute:
