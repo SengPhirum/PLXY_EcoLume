@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="EcoLume">
+  <title>EcoLume</title>
+  <defs>
+    <linearGradient id="ecolumeTile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4FA8FF"/>
+      <stop offset="1" stop-color="#0B67C7"/>
+    </linearGradient>
+    <mask id="ecolumeGlyph">
+      <rect width="64" height="64" fill="#000"/>
+      <rect x="21.5" y="15" width="15" height="6.5" rx="3.25" fill="#fff"/>
+      <path d="M23 23h12l8.5 22.5a25 25 0 0 1-29 0Z" fill="#fff"/>
+      <path d="M33 26 24 39h5.5l-3 10L35.5 35.5h-5Z" fill="#000"/>
+      <path d="M36.56 13.64a9 9 0 0 1 6.9 5.78" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round"/>
+      <path d="M37.34 9.21a13.5 13.5 0 0 1 10.35 8.67" fill="none" stroke="#fff" stroke-width="3.1" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#ecolumeTile)"/>
+  <rect width="64" height="64" rx="15" fill="#fff" mask="url(#ecolumeGlyph)"/>
+</svg>

@@ -8,19 +8,60 @@ on:
   pull_request:
     paths:
       - "firmware/**"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: firmware-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  platformio:
+  build:
+    name: Build and package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - run: pip install platformio
-      - run: cp firmware/include/config.example.h firmware/include/config.h
-      - run: pio run -d firmware
 
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.platformio
+            ~/.cache/pip
+          key: pio-${{ runner.os }}-${{ hashFiles('firmware/platformio.ini') }}
+          restore-keys: pio-${{ runner.os }}-
+
+      - name: Install PlatformIO and esptool
+        run: pip install --upgrade platformio "esptool>=4.7,<5"
+
+      - name: Prepare build configuration
+        run: |
+          cp firmware/include/config.example.h firmware/include/config.h
+          printf '#define ECOLUME_FIRMWARE_VERSION "0.0.0+%s"\n' "${GITHUB_SHA::7}" \
+            > firmware/include/version.h
+
+      - name: Build bench firmware
+        run: pio run -d firmware -e esp32-sim7600
+
+      - name: Build production firmware
+        run: pio run -d firmware -e esp32-sim7600-release
+
+      # Proves the release packaging works on every change, not only at tag time.
+      - name: Package installer artifacts
+        env:
+          FIRMWARE_CHANNEL: development
+        run: firmware/scripts/package-firmware.sh "0.0.0+${GITHUB_SHA::7}"
+
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ecolume-firmware-${{ github.sha }}
+          path: firmware/dist/
+          retention-days: 14
+          if-no-files-found: error

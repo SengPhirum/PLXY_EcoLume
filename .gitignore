@@ -6,7 +6,11 @@ dist/
 coverage/
 backend/data/
 firmware/.pio/
+docs-site/site/
+docs-site/firmware-dist/
 firmware/include/config.h
+firmware/include/version.h
+firmware/dist/
 .idea/
 .vscode/
 !.vscode/extensions.json

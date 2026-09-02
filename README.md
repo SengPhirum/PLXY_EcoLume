@@ -1,8 +1,18 @@
+<p align="center">
+  <img src="brand/ecolume-logo.svg" alt="EcoLume — PLXY smart street lighting" width="320">
+</p>
+
 ![PLXY EcoLume smart LED street-light network in Cambodia](docs/assets/ecolume-cover.webp)
 
 # PLXY EcoLume
 
 PLXY EcoLume is an open, secure-by-design smart street-light management platform for nationwide public-lighting operations. It combines an ESP32 field controller with a central web platform for live monitoring, remote dimming, fault alerts, and maintenance coordination across Cambodia's 24 provinces and Phnom Penh.
+
+**[Documentation site](https://sengphirum.github.io/PLXY_EcoLume/)** ·
+**[Install the firmware from your browser](https://sengphirum.github.io/PLXY_EcoLume/install/)** ·
+[Architecture](docs/ARCHITECTURE.md) ·
+[Hardware](docs/HARDWARE.md) ·
+[API](docs/API.md)
 
 > **Status:** working cellular MVP/reference implementation. Before public-road deployment, complete electrical certification, carrier/RF testing, security review, field calibration, redundancy testing, and ministry acceptance. Never connect an ESP32 directly to mains voltage.
 
@@ -26,6 +36,8 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 - `scripts/device-simulator.ts` — simulated street lights for demonstrations and load testing.
 - `docker-compose.yml` — PostgreSQL, Mosquitto, backend, and simulator-ready local deployment.
 - `docs/` — architecture, [hardware equipment and picture guide](docs/HARDWARE.md), security, deployment, API, and field rollout guidance.
+- `docs-site/` — the documentation website and browser-based ESP32 installer, published to GitHub Pages.
+- `brand/` — the EcoLume mark, app icons, favicons, and colour tokens shared by the portal and the site.
 
 ## Core capabilities
 
@@ -36,7 +48,7 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 | Telemetry | Voltage, current, power, accumulated energy, temperature, RSSI, GNSS |
 | Alerts | Offline, lamp failure, abnormal voltage, over-temperature, tamper |
 | Maintenance | Work orders, priority, assignment, status, due date, alert linkage |
-| Security | Per-device tokens, hashed credentials, TLS-ready MQTT, RBAC, audit trail |
+| Security | Per-device tokens, hashed credentials, per-device serial provisioning, TLS-ready broker and API, RBAC, audit trail |
 | Resilience | Cellular reconnect, local safety schedule, queued telemetry, watchdog |
 
 ## Admin operations centre
@@ -108,12 +120,43 @@ Firmware:
 ```bash
 cd firmware
 cp include/config.example.h include/config.h
-pio run
+pio run                    # build
+pio run --target upload    # flash over USB
+pio device monitor         # provisioning console at 115200 baud
 ```
+
+Or install a published release straight from
+[the browser](https://sengphirum.github.io/PLXY_EcoLume/install/) — connect an ESP32 over
+USB in Chrome, Edge, or Opera on desktop and click **Install**. A web-installed controller
+carries no credentials; give it its identity on the serial console with
+`set device.id …`, `set device.token …`, `set apn …`, then `reboot`. See the
+[firmware guide](firmware/README.md#provision-over-the-serial-console).
+
+Documentation site:
+
+```bash
+npm --prefix docs-site ci
+npm --prefix docs-site run serve    # http://localhost:4321
+npm --prefix docs-site run verify   # link, asset, and installer-manifest checks
+```
+
+## Continuous integration
+
+| Workflow | Trigger | Result |
+|---|---|---|
+| `backend-ci.yml` | Backend or script changes | Typecheck, tests, and production build |
+| `firmware-ci.yml` | Firmware changes | Builds both PlatformIO environments and packages the installer artifacts |
+| `firmware-release.yml` | Tag `firmware-v*` | Publishes a versioned release: merged flash image, ESP Web Tools manifest, `SHA256SUMS` |
+| `docs.yml` | Docs changes or a published release | Builds the site, bundles the newest stable firmware, deploys to GitHub Pages |
+
+Tag a release with `git tag firmware-v1.0.0 && git push origin firmware-v1.0.0`; the
+documentation installer follows the newest stable release automatically. Pre-release tags
+(`firmware-v1.1.0-rc1`) are published but not served to installers.
 
 ## Safety and privacy
 
-- Do not store production credentials, SIM PINs, LoRaWAN root keys, precise government asset locations, or broker certificates in Git.
+- Do not store production credentials, SIM PINs, LoRaWAN root keys, precise government asset locations, or broker certificates in Git. Published firmware images carry no credentials — controllers are provisioned per device over the serial console.
+- TinyGSM's SIM7600 driver has no SSL support, so the reference firmware refuses to publish until an operator explicitly accepts plaintext MQTT. Close that gap before field deployment: see [Security](docs/SECURITY.md#transport-security-on-the-sim7600-build).
 - The repository does not include a software license. Copyright remains with the repository owner unless a license is added.
 - Follow Cambodia's electrical, telecommunications, cybersecurity, procurement, and personal-data requirements.
 - Use certified surge protection, galvanic isolation, weatherproof enclosures, proper earthing, and qualified electrical engineers.

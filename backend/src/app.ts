@@ -37,10 +37,14 @@ export function createApp() {
   app.use(express.urlencoded({ extended: false, limit: '32kb' }));
   app.use(cookieParser());
   app.use(sessionMiddleware);
-  app.use('/public', express.static(path.resolve('src/public'), {
-    immutable: isProduction,
-    maxAge: isProduction ? '7d' : 0
-  }));
+  const staticOptions = { immutable: isProduction, maxAge: isProduction ? '7d' : 0 };
+  app.use('/public', express.static(path.resolve('src/public'), staticOptions));
+  // Brand assets live once at the repository root and are shared with the
+  // documentation site; the container image copies them next to the backend.
+  app.use('/brand', express.static(path.resolve('..', 'brand'), staticOptions));
+  app.get('/favicon.ico', (_request, response) => {
+    response.redirect(301, '/brand/favicon.ico');
+  });
 
   app.get('/health', async (_request, response) => {
     try {

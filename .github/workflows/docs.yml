@@ -1,0 +1,96 @@
+name: Documentation site
+
+# Builds docs-site/ and publishes it to GitHub Pages. Runs on documentation
+# changes and whenever a firmware release is published, so the browser installer
+# always serves the newest stable build.
+#
+# One-time setup: Settings → Pages → Build and deployment → Source: GitHub Actions.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs-site/**"
+      - "docs/**"
+      - "brand/**"
+      - "README.md"
+      - "firmware/README.md"
+      - "firmware-lorawan/README.md"
+      - ".github/workflows/docs.yml"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: docs-site/package-lock.json
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Install dependencies
+        run: npm --prefix docs-site ci
+
+      - name: Bundle the latest stable firmware release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tag="$(gh release list --repo "$GITHUB_REPOSITORY" --limit 50 \
+            --json tagName,isPrerelease,isDraft \
+            --jq '[.[] | select(.isDraft == false and .isPrerelease == false
+                   and (.tagName | startswith("firmware-v")))][0].tagName // ""')"
+          if [ -z "$tag" ]; then
+            echo "::notice::No stable firmware release found; the installer page will point at the local PlatformIO build."
+            exit 0
+          fi
+          mkdir -p docs-site/firmware-dist
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" \
+            --dir docs-site/firmware-dist \
+            --pattern 'manifest.json' --pattern '*.bin' --pattern 'SHA256SUMS'
+          echo "::notice::Installer bundled with firmware release ${tag}"
+
+      - name: Build
+        env:
+          SITE_BASE: ${{ steps.pages.outputs.base_path }}
+          SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
+          FIRMWARE_DIR: ${{ github.workspace }}/docs-site/firmware-dist
+        run: npm --prefix docs-site run build
+
+      - name: Verify the built site
+        run: npm --prefix docs-site run verify
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: docs-site/site
+
+  deploy:
+    name: Deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

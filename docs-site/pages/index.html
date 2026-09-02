@@ -1,0 +1,232 @@
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow"><i></i>Smart city infrastructure</span>
+      <h1>Every street light,<br><em>online and accountable.</em></h1>
+      <p class="lede">PLXY EcoLume is an open, secure-by-design platform for nationwide public lighting: an ESP32 field controller on the pole, live telemetry and remote dimming in the operations centre, and a maintenance workflow that closes the loop.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="{{BASE}}/install/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>
+          Install EcoLume on an ESP32
+        </a>
+        <a class="btn btn-ghost" href="{{BASE}}/docs/architecture/">Read the architecture</a>
+      </div>
+      <p class="hero-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12h6"/></svg>
+        Flash straight from this browser over USB — no toolchain, no drivers to hunt down.
+      </p>
+    </div>
+    <div class="hero-panel" data-reveal>
+      <header><i></i>National operations · live view</header>
+      <div class="hero-stats">
+        <div><span>Network availability</span><strong class="accent">96.1<small>%</small></strong></div>
+        <div><span>Managed lights</span><strong>4,290</strong></div>
+        <div><span>Telemetry interval</span><strong>60<small> s</small></strong></div>
+        <div><span>Coverage</span><strong>25<small> provinces</small></strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="platform">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker">Platform</span>
+      <h2>One controller, one operations centre, one accountable network</h2>
+      <p>Every capability below ships in this repository — firmware, backend, database schema, admin portal, and the deployment tooling to run them together.</p>
+    </div>
+    <div class="card-grid">
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M5 9h14l-2.5 8h-9Z"/><path d="M9 21h6"/></svg></span>
+        <h3>Fleet registry</h3>
+        <p>Asset codes, province and district grouping, GPS position, firmware version, and installation history for every pole.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span>
+        <h3>Live telemetry</h3>
+        <p>Voltage, current, power, accumulated energy, enclosure temperature, ambient lux, RSSI, and GNSS, sampled every minute.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg></span>
+        <h3>Remote dimming</h3>
+        <p>Signed commands set relay state and brightness, with desired-versus-actual tracking and device acknowledgements.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+        <h3>Alert rules</h3>
+        <p>Offline controllers, lamp failure, abnormal voltage, over-temperature, and cabinet tamper raise severity-ranked alerts.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5l-9 9a2.8 2.8 0 0 1-4-4Z"/></svg></span>
+        <h3>Maintenance workflow</h3>
+        <p>Work orders carry priority, assignment, due date, and a link back to the alert that triggered the field visit.</p>
+      </article>
+      <article class="card" data-reveal>
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.4 8.3 8 9 4.6-.7 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <h3>Secure by design</h3>
+        <p>Per-device tokens, hashed credentials, TLS-ready MQTT, role-based access, rate limiting, and a full audit trail.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section tint" id="install">
+  <div class="wrap split">
+    <div data-reveal>
+      <span class="kicker">Browser installation</span>
+      <h2 style="margin:14px 0 12px;font-size:clamp(27px,3.4vw,36px);letter-spacing:-.03em;line-height:1.15">From a bare ESP32 to a reporting field controller in four steps</h2>
+      <p style="color:var(--text-soft);margin:0 0 26px">Web Serial lets a supported desktop browser talk to the board directly. The installer always serves the latest stable firmware release, so field teams flash the same build that CI produced.</p>
+      <a class="btn btn-primary" href="{{BASE}}/install/">Open the installer</a>
+    </div>
+    <div class="pipeline" data-reveal>
+      <article><h3>Connect</h3><p>Plug the ESP32 into a USB port and pick its serial device in the browser prompt.</p></article>
+      <article><h3>Install</h3><p>The merged release image is erased and written, then verified, without a local toolchain.</p></article>
+      <article><h3>Provision</h3><p>Set the device identity, APN, and broker over the built-in serial console.</p></article>
+      <article><h3>Verify</h3><p>The controller connects, publishes telemetry, and appears in the operations centre.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="architecture">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker">Architecture</span>
+      <h2>Field controller to operations centre</h2>
+      <p>The pole reports over MQTT with an HTTPS fallback. The backend validates every payload, evaluates alert rules, and drives the operations portal from a single PostgreSQL schema.</p>
+    </div>
+    <div class="archflow" data-reveal>
+      <div class="arch-col">
+        <span class="arch-label">On the pole</span>
+        <div class="arch-node"><b>LED luminaire</b>Certified isolated driver, DALI or PWM dimming</div>
+        <div class="arch-node key"><b>ESP32 field controller</b>Command handling, offline queue, safety schedule, watchdog</div>
+        <div class="arch-node"><b>Sensing</b>Energy metering, ambient light, enclosure temperature, tamper</div>
+      </div>
+      <div class="arch-link"><span>MQTT over TLS</span><i></i><span>HTTPS fallback</span></div>
+      <div class="arch-col">
+        <span class="arch-label">Transport</span>
+        <div class="arch-node"><b>SIM7600 LTE + GNSS</b>One SIM per pole for isolated sites</div>
+        <div class="arch-node"><b>LoRaWAN + gateway</b>Shared backhaul for grouped roads and districts</div>
+        <div class="arch-node"><b>MQTT broker</b>Per-device credentials, topic isolation</div>
+      </div>
+      <div class="arch-link"><span>Validated</span><i></i><span>telemetry</span></div>
+      <div class="arch-col">
+        <span class="arch-label">Operations centre</span>
+        <div class="arch-node key"><b>EcoLume API</b>Schema validation, alert rules, signed commands, audit log</div>
+        <div class="arch-node"><b>PostgreSQL</b>Assets, telemetry history, alerts, work orders</div>
+        <div class="arch-node"><b>Operations portal</b>Live map, remote control, maintenance workflow</div>
+      </div>
+    </div>
+    <ul class="checklist cols" data-reveal>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>Two backhaul options.</b> Direct SIM7600 cellular for isolated poles, or LoRaWAN with a shared gateway for grouped roads and districts.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>Offline resilience.</b> Telemetry queues on the device, the lamp falls back to a safe local schedule, and a watchdog recovers the controller.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>Schema-validated ingestion.</b> Every telemetry document is checked before it reaches the database, over MQTT and HTTPS alike.</span></li>
+      <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><span><b>Runs anywhere.</b> Docker Compose brings up PostgreSQL, Mosquitto, the API, the portal, and a device simulator in one command.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section tint" id="operations">
+  <div class="wrap">
+    <div class="section-head center" data-reveal>
+      <span class="kicker">Operations centre</span>
+      <h2>Built for a 24/7 national control room</h2>
+      <p>Fleet availability, live asset map, electrical status, energy use, priority alerts, provincial readiness, remote commands, and maintenance — one responsive portal.</p>
+    </div>
+    <figure class="frame" style="margin:0" data-reveal>
+      <img src="{{BASE}}/assets/docs/admin-dashboard.png" alt="EcoLume national operations dashboard showing fleet availability, live asset map and priority alerts" width="1600" height="1000" loading="lazy">
+      <figcaption>Rendered from the actual dashboard code with demonstration data — no production credentials or ministry asset locations are included.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="section" id="hardware">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker">Field hardware</span>
+      <h2>Reference controller, in parts you can actually buy</h2>
+      <p>A functional reference design, not an approved electrical design. A licensed engineer and accredited laboratory must review the final PCB, enclosure, wiring, EMC, surge, thermal, and safety design.</p>
+    </div>
+    <div class="equip-grid" data-reveal>
+      <a class="equip" href="{{BASE}}/docs/hardware/#1-mcu-espressif-esp32-devkitc-v4">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/esp32-devkitc-v4.png" alt="Espressif ESP32-DevKitC V4" loading="lazy"></span>
+        <div><strong>ESP32-DevKitC V4</strong><span>Application controller</span></div>
+      </a>
+      <a class="equip" href="{{BASE}}/docs/hardware/#2-ltegnss-waveshare-sim7600g-h-4g-hat-b">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/sim7600g-h-4g-hat.jpg" alt="Waveshare SIM7600G-H 4G HAT" loading="lazy"></span>
+        <div><strong>SIM7600G-H 4G HAT</strong><span>LTE data and GNSS</span></div>
+      </a>
+      <a class="equip" href="{{BASE}}/docs/hardware/#4-metering-eastron-sdm120-m">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/eastron-sdm120-m.jpg" alt="Eastron SDM120-M energy meter" loading="lazy"></span>
+        <div><strong>Eastron SDM120-M</strong><span>Certified energy metering</span></div>
+      </a>
+      <a class="equip" href="{{BASE}}/docs/hardware/#9-protection-obo-v20-1npe-280">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/obo-v20-1-npe-280.jpg" alt="OBO V20-1+NPE-280 surge protective device" loading="lazy"></span>
+        <div><strong>OBO V20-1+NPE</strong><span>Type 2 surge protection</span></div>
+      </a>
+      <a class="equip" href="{{BASE}}/docs/hardware/#10-enclosure-fibox-arca-403021">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/fibox-arca-403021.jpg" alt="Fibox ARCA 403021 IP66 enclosure" loading="lazy"></span>
+        <div><strong>Fibox ARCA 403021</strong><span>IP66 outdoor enclosure</span></div>
+      </a>
+      <a class="equip" href="{{BASE}}/docs/lorawan/">
+        <span class="shot"><img src="{{BASE}}/assets/docs/equipment/heltec-wifi-lora-32-v4.png" alt="Heltec WiFi LoRa 32 V4 node" loading="lazy"></span>
+        <div><strong>Heltec WiFi LoRa 32</strong><span>Low-cost LoRaWAN node</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section tint" id="documentation">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker">Documentation</span>
+      <h2>Everything needed to pilot, certify, and roll out</h2>
+    </div>
+    <div class="card-grid">
+      <a class="card" href="{{BASE}}/docs/firmware/" data-reveal>
+        <h3>ESP32 + SIM7600 firmware</h3>
+        <p>Illustrated wiring, safe power, modem UART, I²C sensors, flashing, and first bench test.</p>
+        <span class="more">Open guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+      <a class="card" href="{{BASE}}/docs/lorawan/" data-reveal>
+        <h3>LoRaWAN deployment</h3>
+        <p>Low-cost gateway architecture, ChirpStack integration, field survey, and rollout tutorial.</p>
+        <span class="more">Open guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+      <a class="card" href="{{BASE}}/docs/api/" data-reveal>
+        <h3>API &amp; MQTT contract</h3>
+        <p>Telemetry schema, command envelope, event acknowledgements, and the HTTPS fallback endpoint.</p>
+        <span class="more">Open reference <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+      <a class="card" href="{{BASE}}/docs/security/" data-reveal>
+        <h3>Security model</h3>
+        <p>Credential handling, transport security, access control, auditing, and the pre-deployment checklist.</p>
+        <span class="more">Open reference <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+      <a class="card" href="{{BASE}}/docs/deployment/" data-reveal>
+        <h3>Deployment</h3>
+        <p>Environment configuration, Docker Compose, migrations, backups, and production hardening.</p>
+        <span class="more">Open runbook <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+      <a class="card" href="{{BASE}}/docs/rollout/" data-reveal>
+        <h3>Field rollout</h3>
+        <p>Pilot scope, controlled provincial rollout, and the national operations model.</p>
+        <span class="more">Open plan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="wrap inner">
+    <div>
+      <span class="kicker">Ready when you are</span>
+      <h2>Flash a controller in the next two minutes</h2>
+      <p>Connect an ESP32 over USB from Chrome, Edge, or Opera on desktop and install the latest stable EcoLume release.</p>
+    </div>
+    <a class="btn btn-primary" href="{{BASE}}/install/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 21h16"/></svg>
+      Install EcoLume
+    </a>
+  </div>
+</section>

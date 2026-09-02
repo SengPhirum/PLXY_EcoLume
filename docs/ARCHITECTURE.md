@@ -70,7 +70,7 @@ Recommended identifier: `KH-{PROVINCE_CODE}-{SEQUENCE}`, for example `KH-PNH-000
 |---|---|---|
 | Controller | ESP32 | Memory for TLS, MQTT, GNSS, watchdog, and future signed OTA |
 | Modem | SIM7600 | LTE plus integrated GNSS; final model depends on Cambodian carrier bands |
-| Protocol | MQTT 3.1.1 over TLS | Low overhead and command/telemetry topic isolation |
+| Protocol | MQTT 3.1.1 over TLS | Low overhead and command/telemetry topic isolation. The broker and API are TLS-ready; the SIM7600 firmware build is not yet — see [Security](SECURITY.md#transport-security-on-the-sim7600-build) |
 | API | Node.js + TypeScript + Express | Simple operations, strict contracts, broad support |
 | Database | PostgreSQL 16 | Transactions, JSONB, reporting, mature HA options |
 | Portal | Server-rendered responsive UI | Small attack surface and deployable as one service |

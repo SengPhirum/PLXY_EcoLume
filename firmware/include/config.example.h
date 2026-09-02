@@ -34,8 +34,8 @@ constexpr int TEMPERATURE_PIN = 34;
 constexpr int STATUS_LED_PIN = 2;
 
 constexpr float NOMINAL_LAMP_WATTS = 120.0F;
-constexpr uint32_t TELEMETRY_INTERVAL_MS = 60'000;
-constexpr uint32_t COMMAND_WATCHDOG_MS = 15 * 60'000;
+constexpr uint32_t TELEMETRY_INTERVAL_MS = 60000;
+constexpr uint32_t COMMAND_WATCHDOG_MS = 15 * 60000;
 constexpr uint8_t SAFE_NIGHT_BRIGHTNESS = 70;
 constexpr uint8_t FAILSAFE_BRIGHTNESS = 100;
 

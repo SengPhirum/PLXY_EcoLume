@@ -49,6 +49,38 @@ Do not expose the development Compose configuration to the internet. Use:
 
 The MVP seeds demonstration assets only when `SEED_DEMO_DATA=true`. Production must set it to `false`.
 
+## Documentation site and firmware releases
+
+The documentation site in `docs-site/` is a static build published to GitHub Pages by
+`.github/workflows/docs.yml`. One-time setup: **Settings → Pages → Build and deployment →
+Source: GitHub Actions**. After that the workflow runs on documentation changes, whenever a
+release is published, and on demand.
+
+Build and preview it locally:
+
+```bash
+npm --prefix docs-site ci
+npm --prefix docs-site run serve    # http://localhost:4321
+npm --prefix docs-site run verify   # link, asset, and manifest checks
+```
+
+Publish a firmware release, which is what the browser installer serves:
+
+```bash
+git tag firmware-v1.0.0
+git push origin firmware-v1.0.0
+```
+
+`.github/workflows/firmware-release.yml` builds the `esp32-sim7600-release` environment,
+merges bootloader, partition table, OTA selector, and application into a single image,
+writes the ESP Web Tools manifest and `SHA256SUMS`, and publishes them as release assets. A
+tag containing a hyphen (`firmware-v1.1.0-rc1`) is published as a pre-release and is *not*
+picked up by the installer, which only tracks the newest stable release.
+
+Publishing the release triggers the documentation workflow, so the installer page starts
+serving the new build without any manual step. `workflow_dispatch` on either workflow lets
+you rebuild on demand.
+
 ## Backups
 
 At minimum:
