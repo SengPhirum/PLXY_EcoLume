@@ -94,6 +94,10 @@ function write(relative, contents) {
  */
 function rewriteUrl(url, fromDir) {
   if (!url || /^(https?:|mailto:|tel:|data:|#)/i.test(url)) return url;
+  // Already a site path. The raw-HTML pass below runs over output this function
+  // produced, so rewriting has to be idempotent or a resolved URL gets treated
+  // as a repository path and falls through to the GitHub fallback.
+  if (url.startsWith('/')) return url;
   const [rawPath, hash = ''] = url.split('#');
   if (!rawPath) return url;
   const repoPath = path.posix.normalize(path.posix.join(fromDir, rawPath)).replace(/^\.\//, '');

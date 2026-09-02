@@ -66,6 +66,17 @@ for (const page of pages) {
     check(resolveTarget(url) === true, `${label}: ${attribute}="${url}" does not resolve to a file`);
   }
 
+  // A resolved page or asset must never end up as a github.com/blob link: that
+  // is the signature of a URL being rewritten twice, and a blob URL is an HTML
+  // page, so an <img> pointing at one silently renders nothing.
+  for (const [, url] of html.matchAll(/<img[^>]*\ssrc="(https:\/\/github\.com\/[^"]*)"/g)) {
+    problems.push(`${label}: image points at a GitHub page, not an image: ${url}`);
+  }
+  for (const [, url] of html.matchAll(/"https:\/\/github\.com\/[^"]*\/blob\/main\/([^"]*)"/g)) {
+    check(!/^(assets|docs)\//.test(url) || url.endsWith('.md'),
+      `${label}: link escaped to GitHub for a path the site serves: ${url}`);
+  }
+
   check(/<title>[^<]+<\/title>/.test(html), `${label}: missing a title`);
   check(/<meta name="description" content="[^"]+"/.test(html), `${label}: missing a description`);
 }

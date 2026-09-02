@@ -38,6 +38,7 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 - `docs/` — architecture, [hardware equipment and picture guide](docs/HARDWARE.md), security, deployment, API, and field rollout guidance.
 - `docs-site/` — the documentation website and browser-based ESP32 installer, published to GitHub Pages.
 - `brand/` — the EcoLume mark, app icons, favicons, and colour tokens shared by the portal and the site.
+- `tools/` — development-only generators, including the boundary dataset behind the operations map.
 
 ## Core capabilities
 
@@ -45,6 +46,7 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 |---|---|
 | Fleet | Asset registry, province/city grouping, GPS, device and firmware status |
 | Operations | Live status, brightness control, desired-vs-actual state, last contact |
+| Mapping | Real province boundaries, country or single-zone view, assets plotted from GNSS |
 | Telemetry | Voltage, current, power, accumulated energy, temperature, RSSI, GNSS |
 | Alerts | Offline, lamp failure, abnormal voltage, over-temperature, tamper |
 | Maintenance | Work orders, priority, assignment, status, due date, alert linkage |
@@ -56,6 +58,15 @@ Option 2 requires a new LoRaWAN firmware variant and EcoLume adapter; it is docu
 ![PLXY EcoLume national operations dashboard](docs/assets/admin-dashboard.png)
 
 The responsive admin portal provides national fleet availability, live asset locations, electrical status, energy usage, priority alerts, provincial readiness, remote commands, and maintenance workflows. This screenshot was rendered from the actual dashboard code with representative demonstration data—no production credentials or ministry asset locations are included.
+
+The live-fleet map draws real province boundaries and plots each asset from its
+reported GNSS position. Operators switch between the whole country and a single
+province from the panel, or click a province to focus it; `MAP_REGION` sets the
+default view. Boundary data is bundled with the application rather than fetched
+from a tile service, so an operations centre without internet access keeps
+working and asset positions are never disclosed to an outside host by the act of
+drawing them. See [Operations map](docs/ARCHITECTURE.md#operations-map) for the
+boundary-data caveats that must be resolved before ministry acceptance.
 
 ## Current implemented architecture
 
@@ -125,8 +136,8 @@ pio run --target upload    # flash over USB
 pio device monitor         # provisioning console at 115200 baud
 ```
 
-Or install a published release straight from
-[the browser](https://sengphirum.github.io/PLXY_EcoLume/install/) — connect an ESP32 over
+Or install the latest [published release](https://github.com/SengPhirum/PLXY_EcoLume/releases)
+straight from [the browser](https://sengphirum.github.io/PLXY_EcoLume/install/) — connect an ESP32 over
 USB in Chrome, Edge, or Opera on desktop and click **Install**. A web-installed controller
 carries no credentials; give it its identity on the serial console with
 `set device.id …`, `set device.token …`, `set apn …`, then `reboot`. See the
