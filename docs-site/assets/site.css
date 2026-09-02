@@ -250,6 +250,9 @@ a.card:hover { text-decoration: none; }
 
 /* ---------- installer ---------- */
 .install-shell { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 40px; align-items: start; padding: 54px 0 76px; }
+/* Grid tracks size to min-content by default, which lets a long code sample
+   push the whole page wider than the viewport on a phone. */
+.install-shell > *, .doc-shell > * { min-width: 0; }
 .install-card { padding: 30px; border: 1px solid var(--brand-32); border-radius: 20px; background: linear-gradient(150deg, rgb(30 144 255 / .10), var(--surface)); box-shadow: var(--shadow); }
 .install-card h2 { margin: 0 0 10px; font-size: 24px; letter-spacing: -.025em; }
 .install-card > p { margin: 0 0 22px; color: var(--text-soft); }
