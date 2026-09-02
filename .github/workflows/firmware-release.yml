@@ -115,3 +115,15 @@ jobs:
             Type `help` for the provisioning commands.
 
             Verify downloads against `SHA256SUMS`.
+
+  # The release event cannot start this itself (see docs.yml), so call it.
+  publish-docs:
+    name: Refresh the installer
+    needs: release
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/docs.yml
+    with:
+      publish: true

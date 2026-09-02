@@ -77,9 +77,10 @@ writes the ESP Web Tools manifest and `SHA256SUMS`, and publishes them as releas
 tag containing a hyphen (`firmware-v1.1.0-rc1`) is published as a pre-release and is *not*
 picked up by the installer, which only tracks the newest stable release.
 
-Publishing the release triggers the documentation workflow, so the installer page starts
-serving the new build without any manual step. `workflow_dispatch` on either workflow lets
-you rebuild on demand.
+The release job then calls `docs.yml` directly, so the installer page starts serving the
+new build without any manual step. It has to call it rather than rely on the `release`
+trigger: releases published with `GITHUB_TOKEN` do not start further workflow runs.
+`workflow_dispatch` on either workflow lets you rebuild on demand.
 
 ## Backups
 
