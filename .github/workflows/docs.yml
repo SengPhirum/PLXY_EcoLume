@@ -87,6 +87,9 @@ jobs:
           gh release download "$tag" --repo "$GITHUB_REPOSITORY" \
             --dir docs-site/firmware-dist \
             --pattern 'manifest.json' --pattern '*.bin' --pattern 'SHA256SUMS'
+          # Only the merged image is flashed from the browser; the bare
+          # application image stays a release asset for offline and OTA use.
+          rm -f docs-site/firmware-dist/*-app.bin
           echo "::notice::Installer bundled with firmware release ${tag}"
 
       - name: Build
