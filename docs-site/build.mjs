@@ -314,6 +314,9 @@ function buildDocPage(page) {
 
   const groups = [...new Set(DOC_PAGES.map((entry) => entry.group))];
   const side = groups.map((group) => `<section><h4>${group}</h4>${
+    // The installer is not a markdown page but belongs at the top of the list.
+    group === 'Get started' ? `<a href="${BASE}/install/">Install firmware</a>` : ''
+  }${
     DOC_PAGES.filter((entry) => entry.group === group).map((entry) =>
       `<a href="${BASE}/docs/${entry.slug}/"${entry.slug === page.slug ? ' class="current" aria-current="page"' : ''}>${entry.title}</a>`
     ).join('')
@@ -327,7 +330,6 @@ function buildDocPage(page) {
 
   const body = `<div class="wrap doc-shell">
   <nav class="doc-side" aria-label="Documentation">
-    <section><h4>Get started</h4><a href="${BASE}/install/">Install firmware</a></section>
     ${side}
   </nav>
   <article class="prose">
