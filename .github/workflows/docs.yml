@@ -24,6 +24,14 @@ on:
   release:
     types: [published]
   workflow_dispatch:
+  # Releases published by CI use GITHUB_TOKEN, and events from that token do not
+  # start further workflow runs, so firmware-release.yml calls this directly.
+  workflow_call:
+    inputs:
+      publish:
+        description: "Publish to Pages regardless of the calling ref"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -46,7 +54,8 @@ jobs:
       - name: Decide whether this run publishes
         id: mode
         run: |
-          if [ "${{ github.event_name }}" = "release" ] || \
+          if [ "${{ inputs.publish }}" = "true" ] || \
+             [ "${{ github.event_name }}" = "release" ] || \
              [ "${{ github.ref_name }}" = "${{ github.event.repository.default_branch }}" ]; then
             echo "deploy=true" >> "$GITHUB_OUTPUT"
           else
